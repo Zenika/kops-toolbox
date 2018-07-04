@@ -10,9 +10,6 @@ RUN yum -y install epel-release \
 
 RUN pip install --upgrade pip
 
-#ENV KOPS_VERSION $(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)
-#ENV KOPS_VERSION 1.9.1
-
 RUN curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64 \
     && chmod +x kops-linux-amd64 \
     && mv kops-linux-amd64 /usr/local/bin/kops
@@ -22,6 +19,11 @@ WORKDIR /home/guest
 ENV PATH ${PATH}:/home/guest/.local/bin:~guest/bin
 RUN pip install awscli --upgrade --user
 ADD --chown=guest:guest bin bin
+
+ARG KOPS_USER=clevandowski-kops
+ENV KOPS_USER $KOPS_USER
+ARG AWS_REGION=eu-west-3
+ENV AWS_REGION $AWS_REGION
 
 VOLUME ~guest/.aws
 
