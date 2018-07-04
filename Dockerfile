@@ -3,7 +3,7 @@ FROM centos:7
 RUN useradd -u 1000 guest
 
 RUN yum -y install epel-release \
-    && yum -y install python-pip groff which \
+    && yum -y install python-pip groff which openssh-clients \
     && yum clean all \
     && rm -rf /var/cache/yum/* \
     && echo 'complete -C '~guest/.local/bin/aws_completer' aws' >> ~guest/.bashrc
