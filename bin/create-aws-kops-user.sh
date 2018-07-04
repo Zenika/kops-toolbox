@@ -30,7 +30,9 @@ aws iam add-user-to-group --user-name $KOPS_USER --group-name $KOPS_USER
 
 access_id_key=$(cat ~/.aws/credentials | grep "\[$KOPS_USER\]" -A 2 | grep aws_access_key_id | cut -d'=' -f2 | tr -d ' ')
 if [ -n "$access_id_key" ]; then
-  echo "Access key already exists. Aborting creation"
+  echo "Access key already exists"
 else
   aws iam create-access-key --user-name $KOPS_USER | inject-aws-access-key-to-credentials | aws configure --profile $KOPS_USER
 fi
+
+ssh-keygen -q -f ~/.ssh/id_rsa -N ""
