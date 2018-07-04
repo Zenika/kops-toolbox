@@ -23,11 +23,12 @@ ENV PATH ${PATH}:/home/guest/.local/bin:~guest/bin
 RUN pip install awscli --upgrade --user
 ADD --chown=guest:guest bin bin
 
-ARG KOPS_USER=clevandowski-kops
+ARG KOPS_USER=my-kops-user
 ENV KOPS_USER $KOPS_USER
 ARG AWS_REGION=eu-west-3
 ENV AWS_REGION $AWS_REGION
 
 VOLUME ~guest/.aws
 
-CMD "/bin/bash"
+CMD ["/bin/bash"]
+#CMD ["/bin/bash", "-c", "source /home/guest/bin/create-aws-kops-user.sh"]

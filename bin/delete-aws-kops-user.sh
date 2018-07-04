@@ -14,6 +14,8 @@ else
   aws iam delete-access-key --access-key-id $access_id_key --user-name $KOPS_USER
   cat ~/.aws/credentials | head -n 3 > ~/.aws/credentials.tmp
   mv ~/.aws/credentials.tmp ~/.aws/credentials
+  cat ~/.aws/config | head -n 3 > ~/.aws/config.tmp
+  mv ~/.aws/config.tmp ~/.aws/config
 fi
 
 aws iam remove-user-from-group --user-name $KOPS_USER --group-name $KOPS_USER

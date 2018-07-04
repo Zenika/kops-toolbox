@@ -13,7 +13,7 @@ inject-aws-access-key-to-credentials() {
     secret_key_id \
     state \
     user_name; do 
-    printf "$access_key_id\n$secret_key_id\n$AWS_REGION\ntext\n"
+    printf "$access_key_id\n$secret_key_id\n$AWS_REGION\ntext\n\n"
   done
 }
 
