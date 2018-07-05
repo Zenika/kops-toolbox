@@ -10,6 +10,7 @@
 ```
 $ export KOPS_USER=my-kops-user
 $ export AWS_REGION=eu-west-1
+$ export CLUSTER_NAME=my.kops.cluster.k8s.local
 ```
 
 * Créer un lien symbolique vers votre répertoire .aws
