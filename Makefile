@@ -11,4 +11,4 @@ build:
 	.
 
 run: build
-	docker container run --rm -ti --name kops-toolbox -v $$PWD/run/.aws:/home/guest/.aws clevandowski/kops-toolbox:1.0
+	docker container run --rm -ti --name kops-toolbox -v $$PWD/run/.aws:/home/guest/.aws -v $$PWD/run/.kube:/home/guest/.kube clevandowski/kops-toolbox:1.0

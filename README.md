@@ -18,6 +18,11 @@ $ export CLUSTER_NAME=my.kops.cluster.k8s.local
 $ ln -s ~/.aws run/.aws
 ```
 
+* Faire de même avec votre répertoire .kube
+```
+$ ln -s ~/.kube run/.kube
+```
+
 * Build & Run de la toolbox
 Note: A lancer en sudo si vous n'êtes pas dans le groupe docker
 ```
