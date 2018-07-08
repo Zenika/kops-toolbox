@@ -3,10 +3,11 @@ FROM centos:7
 RUN useradd -u 1000 guest
 
 RUN yum -y install epel-release \
-    && yum -y install python-pip groff which openssh-clients \
+    && yum -y install python-pip groff which openssh-clients bash-completion \
     && yum clean all \
     && rm -rf /var/cache/yum/* \
-    && echo 'complete -C '~guest/.local/bin/aws_completer' aws' >> ~guest/.bashrc
+    && echo 'complete -C '~guest/.local/bin/aws_completer' aws' >> ~guest/.bashrc \
+    && echo "source <(kubectl completion bash)" >> ~guest/.bashrc
 
 RUN pip install --upgrade pip
 
@@ -31,6 +32,7 @@ ARG CLUSTER_NAME=my.kops.cluster.k8s.local
 ENV CLUSTER_NAME $CLUSTER_NAME
 
 VOLUME ~guest/.aws
+VOLUME ~guest/.kube
 
 CMD ["/bin/bash"]
 #CMD ["/bin/bash", "-c", "source /home/guest/bin/create-aws-kops-user.sh"]
