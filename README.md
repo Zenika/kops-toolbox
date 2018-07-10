@@ -6,11 +6,12 @@
 
 ## Démarrage de la toolbox
 
-* Déclarer les variables d'environnement KOPS_USER et AWS_REGION
+* Déclarer les variables d'environnement KOPS_USER, AWS_REGION, CLUSTER_NAME et DOCKER_REPO
 ```
 $ export KOPS_USER=my-kops-user
 $ export AWS_REGION=eu-west-1
 $ export CLUSTER_NAME=my.kops.cluster.k8s.local
+$ export DOCKER_REPO=username
 ```
 
 * Créer un lien symbolique vers votre répertoire .aws
