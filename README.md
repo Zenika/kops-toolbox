@@ -49,9 +49,8 @@ Il faut maintenant créer le user kops et le state-store
 
 * Activer le user kops comme utilisateur courant sur AWS
 
-Note: Ne pas oublier le "." devant la commande pour sourcer
 ```
-[guest@ac7056a87f3d ~]$ source source-kops-env.sh
+[guest@ac7056a87f3d ~]$ source bin/source-kops-env.sh
 [guest@ac7056a87f3d ~]$ aws iam get-user
 USER  arn:aws:iam::301517625970:user/clevandowski-kops  2018-07-04T21:47:19Z  / AIDAJQFNXUY23HFPTJ2G4 clevandowski-kops
 [guest@ac7056a87f3d ~]$ echo $KOPS_USER 

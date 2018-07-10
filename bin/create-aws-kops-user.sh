@@ -32,7 +32,7 @@ access_id_key=$(cat ~/.aws/credentials | grep "\[$KOPS_USER\]" -A 2 | grep aws_a
 if [ -n "$access_id_key" ]; then
   echo "Access key already exists"
 else
-  aws iam create-access-key --user-name $KOPS_USER | inject-aws-access-key-to-credentials | aws configure --profile $KOPS_USER
+  aws iam --output text create-access-key --user-name $KOPS_USER | inject-aws-access-key-to-credentials | aws configure --profile $KOPS_USER
 fi
 
 ssh-keygen -q -f ~/.ssh/id_rsa -N ""
