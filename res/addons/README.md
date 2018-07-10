@@ -1,37 +1,39 @@
-* Token nécessaire pour accéder aux applications du cluster en tant qu'admin
+# ADDONS
+
+## Token nécessaire pour accéder aux applications du cluster en tant qu'admin
 
 ```
 kops get secrets kube --type secret -oplaintext
 ```
 
-* Dashboard kubernetes
+## Dashboard kubernetes
 
-Démarrer le dashboard
+* Démarrer le dashboard
 
 ```
 $ kubectl apply -f res/addons/kubernetes-dashboard.yaml
 ```
 
-Récupérer l'URL du dashboard
+* Récupérer l'URL du dashboard
 
 ```
 kubectl cluster-info
 ```
 
-Se connecter au dashboard : 
+* Se connecter au dashboard : 
 
 ```
 https://<kubernetes-master-hostname>/ui
 ```
 
-Récupérer le token d'authentification du dashboard
+* Récupérer le token d'authentification du dashboard
 
 ```
 kops get secrets admin --type secret -oplaintext
 ```
 
 
-* Logging stack EFK
+## Logging stack EFK
 
 ```
 kubectl apply -f res/addons/logging-elasticsearch.yaml
