@@ -1,7 +1,7 @@
 ```
 $ kops create cluster \
 >     --zones ${AWS_REGION}a \
->     --name $NAME \
+>     --name $CLUSTER_NAME \
 >     --master-size=t2.large \
 >     --node-size=t2.large
 I0704 14:00:46.704888     178 create_cluster.go:1318] Using SSH public key: /home/guest/.ssh/id_rsa.pub
@@ -396,7 +396,7 @@ Edit cancelled, no changes made.
 ```
 
 ```
-[guest@be9549c44462 bin]$ kops update cluster ${NAME} --yes
+[guest@be9549c44462 bin]$ kops update cluster ${CLUSTER_NAME} --yes
 I0704 14:03:11.144078     204 apply_cluster.go:456] Gossip DNS: skipping DNS validation
 I0704 14:03:11.314124     204 executor.go:91] Tasks: 0 done / 77 total; 30 can run
 I0704 14:03:11.753938     204 vfs_castore.go:731] Issuing new certificate: "apiserver-aggregator-ca"
@@ -525,7 +525,7 @@ export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
 ```
 
 ```
-[guest@be9549c44462 bin]$ kops delete cluster --name $NAME --yes
+[guest@be9549c44462 bin]$ kops delete cluster --name $CLUSTER_NAME --yes
 TYPE      NAME                      ID
 autoscaling-config  master-eu-west-3a.masters.clevandowski-kops.k8s.local-20180704140313      master-eu-west-3a.masters.clevandowski-kops.k8s.local-20180704140313
 autoscaling-config  nodes.clevandowski-kops.k8s.local-20180704140313          nodes.clevandowski-kops.k8s.local-20180704140313
