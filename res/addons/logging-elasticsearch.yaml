@@ -175,7 +175,7 @@ metadata:
     kubernetes.io/cluster-service: "true"
 spec:
   serviceName: elasticsearch-logging
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
