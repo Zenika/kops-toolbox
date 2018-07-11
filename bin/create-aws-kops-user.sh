@@ -5,6 +5,10 @@ if [ -z "$KOPS_USER" ]; then
   exit 1
 fi
 
+unset AWS_PROFILE
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+
 inject-aws-access-key-to-credentials() {
   while read \
     token_type \
@@ -36,3 +40,5 @@ else
 fi
 
 ssh-keygen -q -f ~/.ssh/id_rsa -N ""
+
+echo "Please source bin/source-kops-env.sh"

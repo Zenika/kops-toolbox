@@ -7,7 +7,8 @@ RUN yum -y install epel-release \
     && yum clean all \
     && rm -rf /var/cache/yum/* \
     && echo "source <(kubectl completion bash)" >> ~guest/.bashrc \
-    && echo 'complete -C '~guest/.local/bin/aws_completer' aws' >> ~guest/.bashrc
+    && echo 'complete -C '~guest/.local/bin/aws_completer' aws' >> ~guest/.bashrc \
+    && echo $'if grep $KOPS_USER .aws/credentials; then\n  . ~/bin/source-kops-env.sh\nelse\n  echo "Please create kops user then source it"\nfi' >> ~guest/.bashrc
 
 RUN pip install --upgrade pip
 

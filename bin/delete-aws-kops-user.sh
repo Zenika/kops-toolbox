@@ -5,6 +5,10 @@ if [ -z "$KOPS_USER" ]; then
   exit 1
 fi
 
+unset AWS_PROFILE
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+
 rm -rf ~/.ssh
 
 access_id_key=$(cat ~/.aws/credentials | grep "\[$KOPS_USER\]" -A 2 | grep aws_access_key_id | cut -d'=' -f2 | tr -d ' ')
