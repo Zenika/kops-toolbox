@@ -36,6 +36,6 @@ ENV DOCKER_REPO $DOCKER_REPO
 
 VOLUME ~guest/.aws
 VOLUME ~guest/.kube
+VOLUME ~guest/.ssh
 
 CMD ["/bin/bash"]
-#CMD ["/bin/bash", "-c", "source /home/guest/bin/create-aws-kops-user.sh"]

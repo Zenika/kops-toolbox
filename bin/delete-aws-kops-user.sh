@@ -9,8 +9,6 @@ unset AWS_PROFILE
 unset AWS_ACCESS_KEY_ID
 unset AWS_SECRET_ACCESS_KEY
 
-rm -rf ~/.ssh
-
 access_id_key=$(cat ~/.aws/credentials | grep "\[$KOPS_USER\]" -A 2 | grep aws_access_key_id | cut -d'=' -f2 | tr -d ' ')
 if [ -z "$access_id_key" ]; then
   echo "No access key found to delete"

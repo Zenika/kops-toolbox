@@ -6,6 +6,7 @@ build:
 	test -n "$(DOCKER_REPO)" || (echo "DOCKER_REPO is not defined (ex: username). Aborting" && exit 1)
 	test -L "run/.aws" || (echo "Directory ~/.aws must be linked on run/.aws (ex: ln -s ~/.aws run/.aws). Aborting" && exit 1)
 	test -L "run/.kube" || (echo "Directory ~/.kube must be linked on run/.kube (ex: ln -s ~/.kube run/.kube). Aborting" && exit 1)
+	test -L "run/.ssh" || (echo "Directory ~/.ssh must be linked on run/.ssh (ex: ln -s ~/.ssh run/.ssh). Aborting" && exit 1)
 	docker image build \
 	-t $$DOCKER_REPO/kops-toolbox:1.0 \
 	--build-arg KOPS_USER=$$KOPS_USER \
@@ -18,5 +19,6 @@ run: build
 	--name kops-toolbox \
 	-v $$PWD/run/.aws:/home/guest/.aws \
 	-v $$PWD/run/.kube:/home/guest/.kube \
+	-v $$PWD/run/.ssh:/home/guest/.ssh \
 	-v $$PWD/res:/home/guest/res \
 	$$DOCKER_REPO/kops-toolbox:1.0

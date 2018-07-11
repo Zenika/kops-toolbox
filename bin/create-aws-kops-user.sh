@@ -39,6 +39,4 @@ else
   aws iam --output text create-access-key --user-name $KOPS_USER | inject-aws-access-key-to-credentials | aws configure --profile $KOPS_USER
 fi
 
-ssh-keygen -q -f ~/.ssh/id_rsa -N ""
-
 echo "Please source bin/source-kops-env.sh"
