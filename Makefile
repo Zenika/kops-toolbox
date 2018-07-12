@@ -26,6 +26,6 @@ run: build
 	--name kops-toolbox \
 	-v $$PWD/run/.aws:/home/guest/.aws \
 	-v $$PWD/run/.kube:/home/guest/.kube \
-	-v $$PWD/run/.ssh:/home/guest/.ssh \
+	-v $$PWD/run/.ssh:/home/guest/.ssh:ro \
 	-v $$PWD/res:/home/guest/res \
 	$$DOCKER_REPO/kops-toolbox:1.0
