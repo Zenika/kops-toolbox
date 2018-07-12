@@ -1,14 +1,9 @@
 FROM centos:7
 
-RUN useradd -u 1000 guest
-
 RUN yum -y install epel-release \
     && yum -y install python-pip groff which openssh-clients bash-completion jq \
     && yum clean all \
-    && rm -rf /var/cache/yum/* \
-    && echo "source <(kubectl completion bash)" >> ~guest/.bashrc \
-    && echo 'complete -C '~guest/.local/bin/aws_completer' aws' >> ~guest/.bashrc \
-    && echo $'if grep $KOPS_USER .aws/credentials; then\n  . ~/bin/source-kops-env.sh\nelse\n  echo "Please create kops user then source it"\nfi' >> ~guest/.bashrc
+    && rm -rf /var/cache/yum/*
 
 RUN pip install --upgrade pip
 
@@ -19,11 +14,19 @@ RUN curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s http
     && chmod +x ./kubectl \
     && mv ./kubectl /usr/local/bin/kubectl
 
-USER 1000
+ARG USER_ID
+ARG GROUP_ID
+RUN groupadd -g ${GROUP_ID} guest
+RUN useradd -u ${USER_ID} -g ${GROUP_ID} guest
+USER ${USER_ID}
 WORKDIR /home/guest
 ENV PATH ${PATH}:/home/guest/.local/bin:~guest/bin
 RUN pip install awscli --upgrade --user
 ADD --chown=guest:guest bin bin
+
+ADD --chown=guest:guest .bashrc_custom .bashrc_custom
+RUN cat ~guest/.bashrc_custom >> ~guest/.bashrc \
+    && rm ~guest/.bashrc_custom
 
 ARG KOPS_USER=my-kops-user
 ENV KOPS_USER $KOPS_USER

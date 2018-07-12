@@ -1,4 +1,5 @@
 run/.aws
 run/.kube
+run/.ssh
 cluster_install.md
 init-clevandowski-kops.sh
