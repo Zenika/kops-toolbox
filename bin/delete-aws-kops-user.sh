@@ -5,6 +5,8 @@ if [ -z "$KOPS_USER" ]; then
   exit 1
 fi
 
+aws --profile $KOPS_USER s3api delete-bucket --bucket $KOPS_USER-state-store
+
 unset AWS_PROFILE
 unset AWS_ACCESS_KEY_ID
 unset AWS_SECRET_ACCESS_KEY

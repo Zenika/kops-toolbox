@@ -1,6 +1,6 @@
 source <(kubectl completion bash)
 source <(kops completion bash)
-complete -C ~guest/.local/bin/aws_completer aws
+complete -C ~/.local/bin/aws_completer aws
 if grep $KOPS_USER .aws/credentials >/dev/null; then
   . ~/bin/source-kops-env.sh
   CURRENT_KOPS_USER=$(aws iam get-user --output=text | awk '{ print $6 }')
@@ -10,5 +10,6 @@ if grep $KOPS_USER .aws/credentials >/dev/null; then
     echo "Error, current user $CURRENT_KOPS_USER is not kops user defined as $KOPS_USER"
   fi
 else
-  echo "Please create kops user then source it"
+  . ~/bin/create-aws-kops-user.sh
+  . ~/bin/source-kops-env.sh
 fi
