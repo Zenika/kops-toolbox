@@ -16,17 +16,24 @@ RUN curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s http
 
 ARG USER_ID
 ARG GROUP_ID
-RUN groupadd -g ${GROUP_ID} guest
-RUN useradd -u ${USER_ID} -g ${GROUP_ID} guest
-USER ${USER_ID}
-WORKDIR /home/guest
-ENV PATH ${PATH}:/home/guest/.local/bin:~guest/bin
-RUN pip install awscli --upgrade --user
-ADD --chown=guest:guest bin bin
+ARG USER_NAME
+ARG GROUP_NAME
+# Add group if not present
+RUN if getent group ${GROUP_ID} >/dev/null; then echo "Group ${GROUP_ID} already exists"; else echo "Creating group ${GROUP_ID}"; groupadd -g ${GROUP_ID} ${GROUP_NAME}; fi
+# Add user if not present
+RUN if getent passwd ${USER_ID} >/dev/null; then echo "User ${USER_ID} already exists"; else echo "Creating user ${USER_ID}"; useradd -u ${USER_ID} -g ${GROUP_ID} ${USER_NAME}; fi
 
-ADD --chown=guest:guest .bashrc_custom .bashrc_custom
-RUN cat ~guest/.bashrc_custom >> ~guest/.bashrc \
-    && rm ~guest/.bashrc_custom
+WORKDIR /home/${USER_NAME}
+ADD bin bin
+ADD .bashrc_custom .bashrc_custom
+RUN chown -R ${USER_ID}:${GROUP_ID} bin && chown -R ${USER_ID}:${GROUP_ID} .bashrc_custom
+USER ${USER_ID}
+WORKDIR /home/${USER_NAME}
+ENV PATH ${PATH}:/home/${USER_NAME}/.local/bin:~${USER_NAME}/bin
+RUN pip install awscli --upgrade --user
+
+RUN cat .bashrc_custom >> .bashrc \
+    && rm .bashrc_custom
 
 ARG KOPS_USER=my-kops-user
 ENV KOPS_USER $KOPS_USER
@@ -37,8 +44,8 @@ ENV CLUSTER_NAME $CLUSTER_NAME
 ARG DOCKER_REPO=kopstoolbox
 ENV DOCKER_REPO $DOCKER_REPO
 
-VOLUME ~guest/.aws
-VOLUME ~guest/.kube
-VOLUME ~guest/.ssh
+VOLUME ~${USER_NAME}/.aws
+VOLUME ~${USER_NAME}/.kube
+VOLUME ~${USER_NAME}/.ssh
 
 CMD ["/bin/bash"]
