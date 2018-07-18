@@ -208,6 +208,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+      nodeSelector:
+        kops.k8s.io/instancegroup: prod
   volumeClaimTemplates:
   - metadata:
       name: es-persistent-storage
@@ -246,9 +248,9 @@ spec:
         resources:
           # keep request = limit to keep this container in guaranteed class
           limits:
-            cpu: 100m
+            cpu: 1000m
           requests:
-            cpu: 100m
+            cpu: 500m
         env:
           - name: "ELASTICSEARCH_URL"
             value: "http://elasticsearch-logging:9200"
@@ -276,6 +278,7 @@ metadata:
     kubernetes.io/cluster-service: "true"
     kubernetes.io/name: "Kibana"
 spec:
+  type: LoadBalancer
   ports:
   - port: 5601
     protocol: TCP
