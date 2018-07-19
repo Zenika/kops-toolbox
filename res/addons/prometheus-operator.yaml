@@ -109,7 +109,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: monitoring
+  name: tooling
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -5389,7 +5389,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-operator
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: apps/v1beta2
 kind: Deployment
@@ -5397,7 +5397,7 @@ metadata:
   labels:
     k8s-app: prometheus-operator
   name: prometheus-operator
-  namespace: monitoring
+  namespace: tooling
 spec:
   replicas: 1
   selector:
@@ -5437,7 +5437,7 @@ metadata:
   labels:
     k8s-app: prometheus-operator
   name: prometheus-operator
-  namespace: monitoring
+  namespace: tooling
 spec:
   clusterIP: None
   ports:
@@ -5451,7 +5451,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus-operator
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Alertmanager
@@ -5459,7 +5459,7 @@ metadata:
   labels:
     alertmanager: main
   name: main
-  namespace: monitoring
+  namespace: tooling
 spec:
   baseImage: quay.io/prometheus/alertmanager
   nodeSelector:
@@ -5474,7 +5474,7 @@ data:
 kind: Secret
 metadata:
   name: alertmanager-main
-  namespace: monitoring
+  namespace: tooling
 type: Opaque
 ---
 apiVersion: v1
@@ -5483,7 +5483,7 @@ metadata:
   labels:
     alertmanager: main
   name: alertmanager-main
-  namespace: monitoring
+  namespace: tooling
 spec:
   ports:
   - name: web
@@ -5497,7 +5497,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: alertmanager-main
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -5505,7 +5505,7 @@ metadata:
   labels:
     k8s-app: alertmanager
   name: alertmanager
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - interval: 30s
@@ -5536,7 +5536,7 @@ data:
 kind: ConfigMap
 metadata:
   name: grafana-datasources
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: v1
 data:
@@ -12421,7 +12421,7 @@ data:
 kind: ConfigMap
 metadata:
   name: grafana-dashboard-definitions
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: v1
 data:
@@ -12440,7 +12440,7 @@ data:
 kind: ConfigMap
 metadata:
   name: grafana-dashboards
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: apps/v1beta2
 kind: Deployment
@@ -12448,7 +12448,7 @@ metadata:
   labels:
     app: grafana
   name: grafana
-  namespace: monitoring
+  namespace: tooling
 spec:
   replicas: 1
   selector:
@@ -12506,7 +12506,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: grafana
-  namespace: monitoring
+  namespace: tooling
 spec:
   type: LoadBalancer
   ports:
@@ -12520,7 +12520,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: grafana
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -12600,7 +12600,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: kube-state-metrics
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: apps/v1beta2
 kind: Deployment
@@ -12608,7 +12608,7 @@ metadata:
   labels:
     app: kube-state-metrics
   name: kube-state-metrics
-  namespace: monitoring
+  namespace: tooling
 spec:
   replicas: 1
   selector:
@@ -12704,7 +12704,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: kube-state-metrics
-  namespace: monitoring
+  namespace: tooling
 rules:
 - apiGroups:
   - ""
@@ -12726,7 +12726,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: kube-state-metrics
-  namespace: monitoring
+  namespace: tooling
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -12741,7 +12741,7 @@ metadata:
   labels:
     k8s-app: kube-state-metrics
   name: kube-state-metrics
-  namespace: monitoring
+  namespace: tooling
 spec:
   clusterIP: None
   ports:
@@ -12758,7 +12758,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kube-state-metrics
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -12766,7 +12766,7 @@ metadata:
   labels:
     k8s-app: kube-state-metrics
   name: kube-state-metrics
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -12819,7 +12819,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: node-exporter
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: apps/v1beta2
 kind: DaemonSet
@@ -12827,7 +12827,7 @@ metadata:
   labels:
     app: node-exporter
   name: node-exporter
-  namespace: monitoring
+  namespace: tooling
 spec:
   selector:
     matchLabels:
@@ -12896,7 +12896,7 @@ metadata:
   labels:
     k8s-app: node-exporter
   name: node-exporter
-  namespace: monitoring
+  namespace: tooling
 spec:
   clusterIP: None
   ports:
@@ -12910,7 +12910,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: node-exporter
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -12918,7 +12918,7 @@ metadata:
   labels:
     k8s-app: node-exporter
   name: node-exporter
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -12962,7 +12962,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
@@ -12970,12 +12970,12 @@ metadata:
   labels:
     prometheus: k8s
   name: k8s
-  namespace: monitoring
+  namespace: tooling
 spec:
   alerting:
     alertmanagers:
     - name: alertmanager-main
-      namespace: monitoring
+      namespace: tooling
       port: web
   baseImage: quay.io/prometheus/prometheus
   nodeSelector:
@@ -12999,7 +12999,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: prometheus-k8s-config
-  namespace: monitoring
+  namespace: tooling
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -13007,7 +13007,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -13021,7 +13021,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -13035,13 +13035,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -13049,13 +13049,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: prometheus-k8s-config
-  namespace: monitoring
+  namespace: tooling
 rules:
 - apiGroups:
   - ""
@@ -13104,7 +13104,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 rules:
 - apiGroups:
   - ""
@@ -13283,7 +13283,7 @@ metadata:
     prometheus: k8s
     role: alert-rules
   name: prometheus-k8s-rules
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: v1
 kind: Service
@@ -13291,7 +13291,7 @@ metadata:
   labels:
     prometheus: k8s
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 spec:
   ports:
   - name: web
@@ -13305,7 +13305,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus-k8s
-  namespace: monitoring
+  namespace: tooling
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -13313,7 +13313,7 @@ metadata:
   labels:
     k8s-app: apiserver
   name: kube-apiserver
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -13338,7 +13338,7 @@ metadata:
   labels:
     k8s-app: coredns
   name: coredns
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -13359,7 +13359,7 @@ metadata:
   labels:
     k8s-app: kube-controller-manager
   name: kube-controller-manager
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - interval: 30s
@@ -13378,7 +13378,7 @@ metadata:
   labels:
     k8s-app: kube-scheduler
   name: kube-scheduler
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - interval: 30s
@@ -13397,7 +13397,7 @@ metadata:
   labels:
     k8s-app: kubelet
   name: kubelet
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -13428,7 +13428,7 @@ metadata:
   labels:
     k8s-app: prometheus
   name: prometheus
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - interval: 30s
@@ -13446,7 +13446,7 @@ metadata:
   labels:
     k8s-app: prometheus-operator
   name: prometheus-operator
-  namespace: monitoring
+  namespace: tooling
 spec:
   endpoints:
   - port: http

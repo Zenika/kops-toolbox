@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: logging
+  annotations:
+    kops.k8s.io/instancegroup: logging
+spec: {}
+status: {}

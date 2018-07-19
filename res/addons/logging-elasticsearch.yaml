@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: elasticsearch-logging
-  namespace: kube-system
+  namespace: logging
   labels:
     k8s-app: elasticsearch-logging
 
@@ -29,14 +29,14 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  namespace: kube-system
+  namespace: logging
   name: elasticsearch-logging
   labels:
     k8s-app: elasticsearch-logging
 subjects:
 - kind: ServiceAccount
   name: elasticsearch-logging
-  namespace: kube-system
+  namespace: logging
   apiGroup: ""
 roleRef:
   kind: ClusterRole
@@ -49,7 +49,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: fluentd-es
-  namespace: kube-system
+  namespace: logging
   labels:
     k8s-app: fluentd-es
 
@@ -83,7 +83,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: fluentd-es
-  namespace: kube-system
+  namespace: logging
   apiGroup: ""
 roleRef:
   kind: ClusterRole
@@ -96,7 +96,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: fluentd-es
-  namespace: kube-system
+  namespace: logging
   labels:
     k8s-addon: logging-elasticsearch.addons.k8s.io
     k8s-app: fluentd-es
@@ -147,7 +147,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: elasticsearch-logging
-  namespace: kube-system
+  namespace: logging
   labels:
     k8s-addon: logging-elasticsearch.addons.k8s.io
     k8s-app: elasticsearch-logging
@@ -167,7 +167,7 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: elasticsearch-logging
-  namespace: kube-system
+  namespace: logging
   labels:
     k8s-addon: logging-elasticsearch.addons.k8s.io
     k8s-app: elasticsearch-logging
@@ -175,7 +175,7 @@ metadata:
     kubernetes.io/cluster-service: "true"
 spec:
   serviceName: elasticsearch-logging
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
@@ -209,7 +209,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
       nodeSelector:
-        kops.k8s.io/instancegroup: prod
+         kops.k8s.io/instancegroup: tooling
   volumeClaimTemplates:
   - metadata:
       name: es-persistent-storage
@@ -227,7 +227,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: kibana-logging
-  namespace: kube-system
+  namespace: logging
   labels:
     k8s-addon: logging-elasticsearch.addons.k8s.io
     k8s-app: kibana-logging
@@ -248,9 +248,9 @@ spec:
         resources:
           # keep request = limit to keep this container in guaranteed class
           limits:
-            cpu: 1000m
+            cpu: 100m
           requests:
-            cpu: 500m
+            cpu: 100m
         env:
           - name: "ELASTICSEARCH_URL"
             value: "http://elasticsearch-logging:9200"
@@ -264,6 +264,8 @@ spec:
         - containerPort: 5601
           name: ui
           protocol: TCP
+      nodeSelector:
+         kops.k8s.io/instancegroup: tooling
 
 ---
 
@@ -271,14 +273,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kibana-logging
-  namespace: kube-system
+  namespace: logging
   labels:
     k8s-addon: logging-elasticsearch.addons.k8s.io
     k8s-app: kibana-logging
     kubernetes.io/cluster-service: "true"
     kubernetes.io/name: "Kibana"
 spec:
-  type: LoadBalancer
+
   ports:
   - port: 5601
     protocol: TCP
