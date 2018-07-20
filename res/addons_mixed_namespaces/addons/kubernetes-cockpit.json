@@ -9,8 +9,7 @@
             "name":"kubernetes-cockpit",
             "labels":{
                "name":"kubernetes-cockpit"
-            },
-            "namespace":"tooling"
+            }
          },
          "spec":{
             "replicas":1,
@@ -35,10 +34,7 @@
                         "name": "KUBE_INSECURE",
                         "value": "true"
                     }]
-                  }],
-                  "nodeSelector": {
-                    "kops.k8s.io/instancegroup": "tooling"
-                  }
+                  }]
                }
             }
          }
@@ -50,8 +46,7 @@
             "name":"kubernetes-cockpit",
             "labels":{
                "name":"kubernetes-cockpit"
-            },
-            "namespace":"tooling"
+            }
          },
          "spec":{
              "type": "LoadBalancer",

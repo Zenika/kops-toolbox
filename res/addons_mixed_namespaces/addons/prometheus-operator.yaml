@@ -105,9 +105,12 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
       serviceAccountName: prometheus-operator
-
 ---
-
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tooling
+---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
@@ -5422,7 +5425,7 @@ spec:
             cpu: 100m
             memory: 50Mi
       nodeSelector:
-        kops.k8s.io/instancegroup: tooling
+        beta.kubernetes.io/os: linux
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
@@ -5460,7 +5463,7 @@ metadata:
 spec:
   baseImage: quay.io/prometheus/alertmanager
   nodeSelector:
-    kops.k8s.io/instancegroup: tooling
+    beta.kubernetes.io/os: linux
   replicas: 3
   serviceAccountName: alertmanager-main
   version: v0.14.0
@@ -5509,7 +5512,7 @@ spec:
     port: web
   namespaceSelector:
     matchNames:
-    - tooling
+    - monitoring
   selector:
     matchLabels:
       alertmanager: main
@@ -5525,7 +5528,7 @@ data:
                 "name": "prometheus",
                 "org_id": 1,
                 "type": "prometheus",
-                "url": "http://prometheus-k8s.tooling.svc:9090",
+                "url": "http://prometheus-k8s.monitoring.svc:9090",
                 "version": 1
             }
         ]
@@ -12482,8 +12485,6 @@ spec:
         - mountPath: /grafana-dashboard-definitions/0
           name: grafana-dashboard-definitions
           readOnly: false
-      nodeSelector:
-        kops.k8s.io/instancegroup: tooling
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
@@ -12693,7 +12694,7 @@ spec:
             cpu: 10m
             memory: 30Mi
       nodeSelector:
-        kops.k8s.io/instancegroup: tooling
+        beta.kubernetes.io/os: linux
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
@@ -12784,7 +12785,7 @@ spec:
   jobLabel: k8s-app
   namespaceSelector:
     matchNames:
-    - tooling
+    - monitoring
   selector:
     matchLabels:
       k8s-app: kube-state-metrics
@@ -12929,7 +12930,7 @@ spec:
   jobLabel: k8s-app
   namespaceSelector:
     matchNames:
-    - tooling
+    - monitoring
   selector:
     matchLabels:
       k8s-app: node-exporter
@@ -12978,7 +12979,7 @@ spec:
       port: web
   baseImage: quay.io/prometheus/prometheus
   nodeSelector:
-    kops.k8s.io/instancegroup: tooling
+    beta.kubernetes.io/os: linux
   replicas: 2
   resources:
     requests:
@@ -13434,7 +13435,7 @@ spec:
     port: web
   namespaceSelector:
     matchNames:
-    - tooling
+    - monitoring
   selector:
     matchLabels:
       prometheus: k8s

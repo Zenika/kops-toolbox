@@ -20,7 +20,7 @@ done
 
 echo "the cluster is up and running"
 
-kubectl apply -f res/addons/namespace-logging.yaml
+kubectl apply -f res/addons/namespace-tooling.yaml
 kubectl apply -f res/addons/logging-elasticsearch.yaml
 kubectl apply -f res/addons/prometheus-operator.yaml
 kubectl apply -f res/addons/kubernetes-dashboard.yaml

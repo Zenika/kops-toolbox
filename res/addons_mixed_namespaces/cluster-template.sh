@@ -132,14 +132,14 @@ metadata:
   creationTimestamp: null
   labels:
     kops.k8s.io/cluster: $CLUSTER_NAME
-  name: tooling
+  name: logging
 spec:
   image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
   machineType: t2.xlarge
   maxSize: 3
   minSize: 3
   nodeLabels:
-    kops.k8s.io/instancegroup: tooling
+    kops.k8s.io/instancegroup: logging
   role: Node
   subnets:
   - eu-west-3a
