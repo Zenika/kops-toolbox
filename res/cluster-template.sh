@@ -14,7 +14,7 @@ spec:
     rbac: {}
   channel: stable
   cloudProvider: aws
-  configBase: s3://vincent-gilles-kops-state-store/$CLUSTER_NAME
+  configBase: $KOPS_STATE_STORE/$CLUSTER_NAME
   etcdClusters:
   - etcdMembers:
     - instanceGroup: master-eu-west-3a
@@ -132,14 +132,14 @@ metadata:
   creationTimestamp: null
   labels:
     kops.k8s.io/cluster: $CLUSTER_NAME
-  name: preprod
+  name: logging
 spec:
   image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
   machineType: t2.xlarge
   maxSize: 3
   minSize: 3
   nodeLabels:
-    kops.k8s.io/instancegroup: preprod
+    kops.k8s.io/instancegroup: logging
   role: Node
   subnets:
   - eu-west-3a
@@ -162,6 +162,28 @@ spec:
   minSize: 3
   nodeLabels:
     kops.k8s.io/instancegroup: prod
+  role: Node
+  subnets:
+  - eu-west-3a
+  - eu-west-3b
+  - eu-west-3c
+
+---
+
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: $CLUSTER_NAME
+  name: preprod
+spec:
+  image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
+  machineType: t2.xlarge
+  maxSize: 3
+  minSize: 3
+  nodeLabels:
+    kops.k8s.io/instancegroup: preprod
   role: Node
   subnets:
   - eu-west-3a
