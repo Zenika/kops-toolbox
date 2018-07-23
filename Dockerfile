@@ -1,7 +1,7 @@
 FROM centos:7
 
 RUN yum -y install epel-release \
-    && yum -y install python-pip groff which openssh-clients bash-completion jq \
+    && yum -y install python-pip groff which openssh-clients bash-completion jq iproute net-tools\
     && yum clean all \
     && rm -rf /var/cache/yum/*
 
