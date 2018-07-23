@@ -29,7 +29,7 @@ run: build
 	test -n "$(DOCKER_REPO)" || (echo "DOCKER_REPO is not defined (ex: username). Aborting" && exit 1)
 
 	docker container run --rm -ti \
-	--name kops-toolbox \
+	--name kops-toolbox-$$$$ \
 	-v $$PWD/run/.aws:/home/$$USER_NAME/.aws \
 	-v $$PWD/run/.kube:/home/$$USER_NAME/.kube \
 	-v $$PWD/run/.ssh:/home/$$USER_NAME/.ssh:ro \
