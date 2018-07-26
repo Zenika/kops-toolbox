@@ -34,4 +34,5 @@ run: build
 	-v $$PWD/run/.kube:/home/$$USER_NAME/.kube \
 	-v $$PWD/run/.ssh:/home/$$USER_NAME/.ssh:ro \
 	-v $$PWD/res:/home/$$USER_NAME/res \
+	-v $$PWD/bin:/home/$$USER_NAME/bin \
 	$$DOCKER_REPO/kops-toolbox:1.0

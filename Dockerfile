@@ -24,9 +24,8 @@ RUN if getent group ${GROUP_ID} >/dev/null; then echo "Group ${GROUP_ID} already
 RUN if getent passwd ${USER_ID} >/dev/null; then echo "User ${USER_ID} already exists"; else echo "Creating user ${USER_ID}"; useradd -u ${USER_ID} -g ${GROUP_ID} ${USER_NAME}; fi
 
 WORKDIR /home/${USER_NAME}
-ADD bin bin
 ADD .bashrc_custom .bashrc_custom
-RUN chown -R ${USER_ID}:${GROUP_ID} bin && chown -R ${USER_ID}:${GROUP_ID} .bashrc_custom
+RUN chown -R ${USER_ID}:${GROUP_ID} .bashrc_custom
 USER ${USER_ID}
 WORKDIR /home/${USER_NAME}
 ENV PATH ${PATH}:/home/${USER_NAME}/.local/bin:~${USER_NAME}/bin
@@ -45,5 +44,6 @@ ENV CLUSTER_NAME $CLUSTER_NAME
 VOLUME ~${USER_NAME}/.aws
 VOLUME ~${USER_NAME}/.kube
 VOLUME ~${USER_NAME}/.ssh
+VOLUME ~${USER_NAME}/bin
 
 CMD ["/bin/bash"]
