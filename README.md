@@ -60,7 +60,7 @@ $ bin/create-and-launch-cluster.sh
 $ kubectl cluster-info
 Kubernetes master is running at https://api-vincent-gilles-kops-k-h32v9n-330048093.eu-west-3.elb.amazonaws.com
 ```
-Accéder au dashboard : <url du cluster>/ui
+Accéder au dashboard : \<url du cluster\>/ui
 
 * Récupérer les credentials : 
 ```
