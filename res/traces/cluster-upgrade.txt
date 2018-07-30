@@ -1,0 +1,394 @@
+[vincent@6e6f799a9f9c ~]$ kops upgrade cluster vincent.gilles.kops.k8s.local
+ITEM	PROPERTY		OLD	NEW
+Cluster	KubernetesVersion	1.9.6	1.9.8
+
+Must specify --yes to perform upgrade
+[vincent@6e6f799a9f9c ~]$ !! --yes
+kops upgrade cluster vincent.gilles.kops.k8s.local --yes
+ITEM	PROPERTY		OLD	NEW
+Cluster	KubernetesVersion	1.9.6	1.9.8
+
+Updates applied to configuration.
+You can now apply these changes, using `kops update cluster vincent.gilles.kops.k8s.local`
+[vincent@6e6f799a9f9c ~]$ kops update cluster vincent.gilles.kops.k8s.local
+I0726 13:06:20.776025    1323 apply_cluster.go:456] Gossip DNS: skipping DNS validation
+I0726 13:06:20.806229    1323 executor.go:91] Tasks: 0 done / 98 total; 37 can run
+I0726 13:06:21.297295    1323 executor.go:91] Tasks: 37 done / 98 total; 26 can run
+I0726 13:06:21.635653    1323 executor.go:91] Tasks: 63 done / 98 total; 25 can run
+I0726 13:06:21.961954    1323 executor.go:91] Tasks: 88 done / 98 total; 7 can run
+I0726 13:06:22.112148    1323 executor.go:91] Tasks: 95 done / 98 total; 3 can run
+I0726 13:06:22.168991    1323 executor.go:91] Tasks: 98 done / 98 total; 0 can run
+Will modify resources:
+  LaunchConfiguration/master-eu-west-3a.masters.vincent.gilles.kops.k8s.local
+  	UserData
+  	                    	...
+  	                    	    etcdServersOverrides:
+  	                    	    - /events#http://127.0.0.1:4002
+  	                    	+   image: gcr.io/google_containers/kube-apiserver:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-apiserver:v1.9.6
+  	                    	    insecurePort: 8080
+  	                    	    kubeletPreferredAddressTypes:
+  	                    	...
+  	                    	    clusterName: vincent.gilles.kops.k8s.local
+  	                    	    configureCloudRoutes: false
+  	                    	+   image: gcr.io/google_containers/kube-controller-manager:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-controller-manager:v1.9.6
+  	                    	    leaderElection:
+  	                    	      leaderElect: true
+  	                    	...
+  	                    	    cpuRequest: 100m
+  	                    	    hostnameOverride: '@aws'
+  	                    	+   image: gcr.io/google_containers/kube-proxy:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-proxy:v1.9.6
+  	                    	    logLevel: 2
+  	                    	  kubeScheduler:
+  	                    	+   image: gcr.io/google_containers/kube-scheduler:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-scheduler:v1.9.6
+  	                    	    leaderElection:
+  	                    	      leaderElect: true
+  	                    	...
+  	                    	  cat > kube_env.yaml << '__EOF_KUBE_ENV'
+  	                    	  Assets:
+  	                    	+ - 6468397888494efe4a32e6bd96700ba6a86e635a@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubelet
+  	                    	- - 32b1234e68d4d576c3fe0b62e608e361e09408a1@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubelet
+  	                    	+ - 9a3537a7d95f1beec55e2fae082c364f6b91fdc0@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubectl
+  	                    	- - 04d344ac9b2a6514f0d94c2df79073e42d6c1182@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubectl
+  	                    	  - d595d3ded6499a64e8dac02466e2f5f2ce257c9f@https://storage.googleapis.com/kubernetes-release/network-plugins/cni-plugins-amd64-v0.6.0.tgz
+  	                    	  - 72fac6679084d1f929d0abbd8a9ff9337273504b@https://kubeupv2.s3.amazonaws.com/kops/1.9.2/linux/amd64/utils.tar.gz
+  	                    	...
+
+
+  LaunchConfiguration/master-eu-west-3b.masters.vincent.gilles.kops.k8s.local
+  	UserData
+  	                    	...
+  	                    	    etcdServersOverrides:
+  	                    	    - /events#http://127.0.0.1:4002
+  	                    	+   image: gcr.io/google_containers/kube-apiserver:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-apiserver:v1.9.6
+  	                    	    insecurePort: 8080
+  	                    	    kubeletPreferredAddressTypes:
+  	                    	...
+  	                    	    clusterName: vincent.gilles.kops.k8s.local
+  	                    	    configureCloudRoutes: false
+  	                    	+   image: gcr.io/google_containers/kube-controller-manager:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-controller-manager:v1.9.6
+  	                    	    leaderElection:
+  	                    	      leaderElect: true
+  	                    	...
+  	                    	    cpuRequest: 100m
+  	                    	    hostnameOverride: '@aws'
+  	                    	+   image: gcr.io/google_containers/kube-proxy:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-proxy:v1.9.6
+  	                    	    logLevel: 2
+  	                    	  kubeScheduler:
+  	                    	+   image: gcr.io/google_containers/kube-scheduler:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-scheduler:v1.9.6
+  	                    	    leaderElection:
+  	                    	      leaderElect: true
+  	                    	...
+  	                    	  cat > kube_env.yaml << '__EOF_KUBE_ENV'
+  	                    	  Assets:
+  	                    	+ - 6468397888494efe4a32e6bd96700ba6a86e635a@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubelet
+  	                    	- - 32b1234e68d4d576c3fe0b62e608e361e09408a1@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubelet
+  	                    	+ - 9a3537a7d95f1beec55e2fae082c364f6b91fdc0@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubectl
+  	                    	- - 04d344ac9b2a6514f0d94c2df79073e42d6c1182@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubectl
+  	                    	  - d595d3ded6499a64e8dac02466e2f5f2ce257c9f@https://storage.googleapis.com/kubernetes-release/network-plugins/cni-plugins-amd64-v0.6.0.tgz
+  	                    	  - 72fac6679084d1f929d0abbd8a9ff9337273504b@https://kubeupv2.s3.amazonaws.com/kops/1.9.2/linux/amd64/utils.tar.gz
+  	                    	...
+
+
+  LaunchConfiguration/master-eu-west-3c.masters.vincent.gilles.kops.k8s.local
+  	UserData
+  	                    	...
+  	                    	    etcdServersOverrides:
+  	                    	    - /events#http://127.0.0.1:4002
+  	                    	+   image: gcr.io/google_containers/kube-apiserver:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-apiserver:v1.9.6
+  	                    	    insecurePort: 8080
+  	                    	    kubeletPreferredAddressTypes:
+  	                    	...
+  	                    	    clusterName: vincent.gilles.kops.k8s.local
+  	                    	    configureCloudRoutes: false
+  	                    	+   image: gcr.io/google_containers/kube-controller-manager:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-controller-manager:v1.9.6
+  	                    	    leaderElection:
+  	                    	      leaderElect: true
+  	                    	...
+  	                    	    cpuRequest: 100m
+  	                    	    hostnameOverride: '@aws'
+  	                    	+   image: gcr.io/google_containers/kube-proxy:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-proxy:v1.9.6
+  	                    	    logLevel: 2
+  	                    	  kubeScheduler:
+  	                    	+   image: gcr.io/google_containers/kube-scheduler:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-scheduler:v1.9.6
+  	                    	    leaderElection:
+  	                    	      leaderElect: true
+  	                    	...
+  	                    	  cat > kube_env.yaml << '__EOF_KUBE_ENV'
+  	                    	  Assets:
+  	                    	+ - 6468397888494efe4a32e6bd96700ba6a86e635a@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubelet
+  	                    	- - 32b1234e68d4d576c3fe0b62e608e361e09408a1@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubelet
+  	                    	+ - 9a3537a7d95f1beec55e2fae082c364f6b91fdc0@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubectl
+  	                    	- - 04d344ac9b2a6514f0d94c2df79073e42d6c1182@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubectl
+  	                    	  - d595d3ded6499a64e8dac02466e2f5f2ce257c9f@https://storage.googleapis.com/kubernetes-release/network-plugins/cni-plugins-amd64-v0.6.0.tgz
+  	                    	  - 72fac6679084d1f929d0abbd8a9ff9337273504b@https://kubeupv2.s3.amazonaws.com/kops/1.9.2/linux/amd64/utils.tar.gz
+  	                    	...
+
+
+  LaunchConfiguration/preprod.vincent.gilles.kops.k8s.local
+  	UserData
+  	                    	...
+  	                    	    cpuRequest: 100m
+  	                    	    hostnameOverride: '@aws'
+  	                    	+   image: gcr.io/google_containers/kube-proxy:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-proxy:v1.9.6
+  	                    	    logLevel: 2
+  	                    	  kubelet:
+  	                    	...
+  	                    	  cat > kube_env.yaml << '__EOF_KUBE_ENV'
+  	                    	  Assets:
+  	                    	+ - 6468397888494efe4a32e6bd96700ba6a86e635a@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubelet
+  	                    	- - 32b1234e68d4d576c3fe0b62e608e361e09408a1@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubelet
+  	                    	+ - 9a3537a7d95f1beec55e2fae082c364f6b91fdc0@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubectl
+  	                    	- - 04d344ac9b2a6514f0d94c2df79073e42d6c1182@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubectl
+  	                    	  - d595d3ded6499a64e8dac02466e2f5f2ce257c9f@https://storage.googleapis.com/kubernetes-release/network-plugins/cni-plugins-amd64-v0.6.0.tgz
+  	                    	  - 72fac6679084d1f929d0abbd8a9ff9337273504b@https://kubeupv2.s3.amazonaws.com/kops/1.9.2/linux/amd64/utils.tar.gz
+  	                    	...
+
+
+  LaunchConfiguration/prod.vincent.gilles.kops.k8s.local
+  	UserData
+  	                    	...
+  	                    	    cpuRequest: 100m
+  	                    	    hostnameOverride: '@aws'
+  	                    	+   image: gcr.io/google_containers/kube-proxy:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-proxy:v1.9.6
+  	                    	    logLevel: 2
+  	                    	  kubelet:
+  	                    	...
+  	                    	  cat > kube_env.yaml << '__EOF_KUBE_ENV'
+  	                    	  Assets:
+  	                    	+ - 6468397888494efe4a32e6bd96700ba6a86e635a@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubelet
+  	                    	- - 32b1234e68d4d576c3fe0b62e608e361e09408a1@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubelet
+  	                    	+ - 9a3537a7d95f1beec55e2fae082c364f6b91fdc0@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubectl
+  	                    	- - 04d344ac9b2a6514f0d94c2df79073e42d6c1182@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubectl
+  	                    	  - d595d3ded6499a64e8dac02466e2f5f2ce257c9f@https://storage.googleapis.com/kubernetes-release/network-plugins/cni-plugins-amd64-v0.6.0.tgz
+  	                    	  - 72fac6679084d1f929d0abbd8a9ff9337273504b@https://kubeupv2.s3.amazonaws.com/kops/1.9.2/linux/amd64/utils.tar.gz
+  	                    	...
+
+
+  LaunchConfiguration/tooling.vincent.gilles.kops.k8s.local
+  	UserData
+  	                    	...
+  	                    	    cpuRequest: 100m
+  	                    	    hostnameOverride: '@aws'
+  	                    	+   image: gcr.io/google_containers/kube-proxy:v1.9.8
+  	                    	-   image: gcr.io/google_containers/kube-proxy:v1.9.6
+  	                    	    logLevel: 2
+  	                    	  kubelet:
+  	                    	...
+  	                    	  cat > kube_env.yaml << '__EOF_KUBE_ENV'
+  	                    	  Assets:
+  	                    	+ - 6468397888494efe4a32e6bd96700ba6a86e635a@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubelet
+  	                    	- - 32b1234e68d4d576c3fe0b62e608e361e09408a1@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubelet
+  	                    	+ - 9a3537a7d95f1beec55e2fae082c364f6b91fdc0@https://storage.googleapis.com/kubernetes-release/release/v1.9.8/bin/linux/amd64/kubectl
+  	                    	- - 04d344ac9b2a6514f0d94c2df79073e42d6c1182@https://storage.googleapis.com/kubernetes-release/release/v1.9.6/bin/linux/amd64/kubectl
+  	                    	  - d595d3ded6499a64e8dac02466e2f5f2ce257c9f@https://storage.googleapis.com/kubernetes-release/network-plugins/cni-plugins-amd64-v0.6.0.tgz
+  	                    	  - 72fac6679084d1f929d0abbd8a9ff9337273504b@https://kubeupv2.s3.amazonaws.com/kops/1.9.2/linux/amd64/utils.tar.gz
+  	                    	...
+
+
+Must specify --yes to apply changes
+[vincent@6e6f799a9f9c ~]$ kubectl version
+Client Version: version.Info{Major:"1", Minor:"11", GitVersion:"v1.11.1", GitCommit:"b1b29978270dc22fecc592ac55d903350454310a", GitTreeState:"clean", BuildDate:"2018-07-17T18:53:20Z", GoVersion:"go1.10.3", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"9", GitVersion:"v1.9.6", GitCommit:"9f8ebd171479bec0ada837d7ee641dec2f8c6dd1", GitTreeState:"clean", BuildDate:"2018-03-21T15:13:31Z", GoVersion:"go1.9.3", Compiler:"gc", Platform:"linux/amd64"}
+[vincent@6e6f799a9f9c ~]$ kubectl version -o yaml
+clientVersion:
+  buildDate: 2018-07-17T18:53:20Z
+  compiler: gc
+  gitCommit: b1b29978270dc22fecc592ac55d903350454310a
+  gitTreeState: clean
+  gitVersion: v1.11.1
+  goVersion: go1.10.3
+  major: "1"
+  minor: "11"
+  platform: linux/amd64
+serverVersion:
+  buildDate: 2018-03-21T15:13:31Z
+  compiler: gc
+  gitCommit: 9f8ebd171479bec0ada837d7ee641dec2f8c6dd1
+  gitTreeState: clean
+  gitVersion: v1.9.6
+  goVersion: go1.9.3
+  major: "1"
+  minor: "9"
+  platform: linux/amd64
+
+[vincent@6e6f799a9f9c ~]$ kops update cluster vincent.gilles.kops.k8s.local --yes
+I0726 13:07:38.271143    1351 apply_cluster.go:456] Gossip DNS: skipping DNS validation
+I0726 13:07:38.849088    1351 executor.go:91] Tasks: 0 done / 98 total; 37 can run
+I0726 13:07:39.279586    1351 executor.go:91] Tasks: 37 done / 98 total; 26 can run
+I0726 13:07:39.623272    1351 executor.go:91] Tasks: 63 done / 98 total; 25 can run
+I0726 13:07:40.333695    1351 executor.go:91] Tasks: 88 done / 98 total; 7 can run
+I0726 13:07:40.534201    1351 executor.go:91] Tasks: 95 done / 98 total; 3 can run
+I0726 13:07:40.625894    1351 executor.go:91] Tasks: 98 done / 98 total; 0 can run
+I0726 13:07:40.730377    1351 update_cluster.go:291] Exporting kubecfg for cluster
+kops has set your kubectl context to vincent.gilles.kops.k8s.local
+
+Cluster changes have been applied to the cloud.
+
+
+Changes may require instances to restart: kops rolling-update cluster
+
+[vincent@6e6f799a9f9c ~]$ kubectl version -o yaml
+clientVersion:
+  buildDate: 2018-07-17T18:53:20Z
+  compiler: gc
+  gitCommit: b1b29978270dc22fecc592ac55d903350454310a
+  gitTreeState: clean
+  gitVersion: v1.11.1
+  goVersion: go1.10.3
+  major: "1"
+  minor: "11"
+  platform: linux/amd64
+serverVersion:
+  buildDate: 2018-03-21T15:13:31Z
+  compiler: gc
+  gitCommit: 9f8ebd171479bec0ada837d7ee641dec2f8c6dd1
+  gitTreeState: clean
+  gitVersion: v1.9.6
+  goVersion: go1.9.3
+  major: "1"
+  minor: "9"
+  platform: linux/amd64
+
+[vincent@6e6f799a9f9c ~]$ kops rolling-update cluster --yes
+Using cluster from kubectl context: vincent.gilles.kops.k8s.local
+
+NAME			STATUS		NEEDUPDATE	READY	MIN	MAX	NODES
+master-eu-west-3a	NeedsUpdate	1		0	1	1	1
+master-eu-west-3b	NeedsUpdate	1		0	1	1	1
+master-eu-west-3c	NeedsUpdate	1		0	1	1	1
+preprod			NeedsUpdate	3		0	3	3	3
+prod			NeedsUpdate	3		0	3	3	3
+tooling			NeedsUpdate	3		0	3	3	3
+I0726 13:08:23.101054    1379 instancegroups.go:157] Draining the node: "ip-172-20-89-148.eu-west-3.compute.internal".
+node "ip-172-20-89-148.eu-west-3.compute.internal" cordoned
+node "ip-172-20-89-148.eu-west-3.compute.internal" cordoned
+WARNING: Ignoring DaemonSet-managed pods: weave-net-xmff7, node-exporter-252fq; Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: etcd-server-events-ip-172-20-89-148.eu-west-3.compute.internal, etcd-server-ip-172-20-89-148.eu-west-3.compute.internal, kube-apiserver-ip-172-20-89-148.eu-west-3.compute.internal, kube-controller-manager-ip-172-20-89-148.eu-west-3.compute.internal, kube-proxy-ip-172-20-89-148.eu-west-3.compute.internal, kube-scheduler-ip-172-20-89-148.eu-west-3.compute.internal
+pod "dns-controller-6d79cf4b4d-hq7nc" evicted
+node "ip-172-20-89-148.eu-west-3.compute.internal" drained
+I0726 13:09:55.708759    1379 instancegroups.go:273] Stopping instance "i-0815a880aa8cdf673", node "ip-172-20-89-148.eu-west-3.compute.internal", in group "master-eu-west-3b.masters.vincent.gilles.kops.k8s.local".
+I0726 13:14:55.504602    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:14:56.607481    1379 instancegroups.go:249] Cluster validated.
+I0726 13:14:57.414472    1379 instancegroups.go:157] Draining the node: "ip-172-20-120-59.eu-west-3.compute.internal".
+node "ip-172-20-120-59.eu-west-3.compute.internal" cordoned
+node "ip-172-20-120-59.eu-west-3.compute.internal" cordoned
+WARNING: Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: etcd-server-events-ip-172-20-120-59.eu-west-3.compute.internal, etcd-server-ip-172-20-120-59.eu-west-3.compute.internal, kube-apiserver-ip-172-20-120-59.eu-west-3.compute.internal, kube-controller-manager-ip-172-20-120-59.eu-west-3.compute.internal, kube-proxy-ip-172-20-120-59.eu-west-3.compute.internal, kube-scheduler-ip-172-20-120-59.eu-west-3.compute.internal; Ignoring DaemonSet-managed pods: weave-net-xpftp, node-exporter-9blwn
+pod "dns-controller-6d79cf4b4d-lxz9m" evicted
+node "ip-172-20-120-59.eu-west-3.compute.internal" drained
+I0726 13:16:39.201668    1379 instancegroups.go:273] Stopping instance "i-048e4392be6fcb4e1", node "ip-172-20-120-59.eu-west-3.compute.internal", in group "master-eu-west-3c.masters.vincent.gilles.kops.k8s.local".
+I0726 13:21:39.027573    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:21:40.075324    1379 instancegroups.go:249] Cluster validated.
+I0726 13:21:40.690610    1379 instancegroups.go:157] Draining the node: "ip-172-20-61-136.eu-west-3.compute.internal".
+node "ip-172-20-61-136.eu-west-3.compute.internal" cordoned
+node "ip-172-20-61-136.eu-west-3.compute.internal" cordoned
+WARNING: Ignoring DaemonSet-managed pods: weave-net-8b4wx, node-exporter-zksf7; Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: etcd-server-events-ip-172-20-61-136.eu-west-3.compute.internal, etcd-server-ip-172-20-61-136.eu-west-3.compute.internal, kube-apiserver-ip-172-20-61-136.eu-west-3.compute.internal, kube-controller-manager-ip-172-20-61-136.eu-west-3.compute.internal, kube-proxy-ip-172-20-61-136.eu-west-3.compute.internal, kube-scheduler-ip-172-20-61-136.eu-west-3.compute.internal
+node "ip-172-20-61-136.eu-west-3.compute.internal" drained
+I0726 13:23:11.107516    1379 instancegroups.go:273] Stopping instance "i-0041ce1951d9d98e2", node "ip-172-20-61-136.eu-west-3.compute.internal", in group "master-eu-west-3a.masters.vincent.gilles.kops.k8s.local".
+I0726 13:28:10.946256    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:28:11.668485    1379 instancegroups.go:249] Cluster validated.
+I0726 13:28:12.277316    1379 instancegroups.go:157] Draining the node: "ip-172-20-35-122.eu-west-3.compute.internal".
+node "ip-172-20-35-122.eu-west-3.compute.internal" cordoned
+node "ip-172-20-35-122.eu-west-3.compute.internal" cordoned
+WARNING: Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-35-122.eu-west-3.compute.internal; Ignoring DaemonSet-managed pods: weave-net-tglnp, fluentd-es-mwcqm, node-exporter-hrhcb
+node "ip-172-20-35-122.eu-west-3.compute.internal" drained
+I0726 13:29:43.764166    1379 instancegroups.go:273] Stopping instance "i-00ce5da1056ff81fd", node "ip-172-20-35-122.eu-west-3.compute.internal", in group "preprod.vincent.gilles.kops.k8s.local".
+I0726 13:33:43.677030    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:33:44.652538    1379 instancegroups.go:249] Cluster validated.
+I0726 13:33:44.652587    1379 instancegroups.go:157] Draining the node: "ip-172-20-106-212.eu-west-3.compute.internal".
+node "ip-172-20-106-212.eu-west-3.compute.internal" cordoned
+node "ip-172-20-106-212.eu-west-3.compute.internal" cordoned
+WARNING: Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-106-212.eu-west-3.compute.internal; Ignoring DaemonSet-managed pods: weave-net-rb49k, fluentd-es-xrbn8, node-exporter-qc2nj
+node "ip-172-20-106-212.eu-west-3.compute.internal" drained
+I0726 13:35:15.102378    1379 instancegroups.go:273] Stopping instance "i-0224052f6e03fb82e", node "ip-172-20-106-212.eu-west-3.compute.internal", in group "preprod.vincent.gilles.kops.k8s.local".
+I0726 13:39:14.975897    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:39:15.610934    1379 instancegroups.go:249] Cluster validated.
+I0726 13:39:15.611130    1379 instancegroups.go:157] Draining the node: "ip-172-20-88-20.eu-west-3.compute.internal".
+node "ip-172-20-88-20.eu-west-3.compute.internal" cordoned
+node "ip-172-20-88-20.eu-west-3.compute.internal" cordoned
+WARNING: Deleting pods with local storage: kubernetes-dashboard-5bd6f767c7-mkxhl; Ignoring DaemonSet-managed pods: weave-net-xqggq, fluentd-es-bv7sd, node-exporter-f2gbq; Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-88-20.eu-west-3.compute.internal
+pod "kubernetes-dashboard-5bd6f767c7-mkxhl" evicted
+node "ip-172-20-88-20.eu-west-3.compute.internal" drained
+I0726 13:40:57.467459    1379 instancegroups.go:273] Stopping instance "i-0f698ebe9d7d648dd", node "ip-172-20-88-20.eu-west-3.compute.internal", in group "preprod.vincent.gilles.kops.k8s.local".
+I0726 13:44:57.318121    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:44:58.256828    1379 instancegroups.go:249] Cluster validated.
+I0726 13:44:59.011402    1379 instancegroups.go:157] Draining the node: "ip-172-20-46-139.eu-west-3.compute.internal".
+node "ip-172-20-46-139.eu-west-3.compute.internal" cordoned
+node "ip-172-20-46-139.eu-west-3.compute.internal" cordoned
+WARNING: Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-46-139.eu-west-3.compute.internal; Ignoring DaemonSet-managed pods: weave-net-nmpzc, fluentd-es-gz6lb, node-exporter-r8vjt
+node "ip-172-20-46-139.eu-west-3.compute.internal" drained
+I0726 13:46:29.597826    1379 instancegroups.go:273] Stopping instance "i-01205b91e82479135", node "ip-172-20-46-139.eu-west-3.compute.internal", in group "prod.vincent.gilles.kops.k8s.local".
+I0726 13:50:29.464203    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:50:30.075127    1379 instancegroups.go:249] Cluster validated.
+I0726 13:50:30.075181    1379 instancegroups.go:157] Draining the node: "ip-172-20-80-56.eu-west-3.compute.internal".
+node "ip-172-20-80-56.eu-west-3.compute.internal" cordoned
+node "ip-172-20-80-56.eu-west-3.compute.internal" cordoned
+WARNING: Ignoring DaemonSet-managed pods: weave-net-xksnq, fluentd-es-zkkp7, node-exporter-2klcg; Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-80-56.eu-west-3.compute.internal
+pod "kube-dns-autoscaler-787d59df8f-xvzh9" evicted
+pod "kube-dns-756bfc7fdf-6mdht" evicted
+node "ip-172-20-80-56.eu-west-3.compute.internal" drained
+I0726 13:53:20.064534    1379 instancegroups.go:273] Stopping instance "i-01c51e6abcc2cc82c", node "ip-172-20-80-56.eu-west-3.compute.internal", in group "prod.vincent.gilles.kops.k8s.local".
+I0726 13:57:19.944615    1379 instancegroups.go:188] Validating the cluster.
+I0726 13:57:20.570554    1379 instancegroups.go:249] Cluster validated.
+I0726 13:57:20.570614    1379 instancegroups.go:157] Draining the node: "ip-172-20-123-134.eu-west-3.compute.internal".
+node "ip-172-20-123-134.eu-west-3.compute.internal" cordoned
+node "ip-172-20-123-134.eu-west-3.compute.internal" cordoned
+WARNING: Ignoring DaemonSet-managed pods: weave-net-gsgkl, fluentd-es-vhmxc, node-exporter-5sl5c; Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-123-134.eu-west-3.compute.internal
+node "ip-172-20-123-134.eu-west-3.compute.internal" drained
+I0726 13:58:51.100415    1379 instancegroups.go:273] Stopping instance "i-07b917a4c8d441ea3", node "ip-172-20-123-134.eu-west-3.compute.internal", in group "prod.vincent.gilles.kops.k8s.local".
+I0726 14:02:50.988342    1379 instancegroups.go:188] Validating the cluster.
+I0726 14:02:51.638162    1379 instancegroups.go:249] Cluster validated.
+I0726 14:02:52.131602    1379 instancegroups.go:157] Draining the node: "ip-172-20-101-189.eu-west-3.compute.internal".
+node "ip-172-20-101-189.eu-west-3.compute.internal" cordoned
+node "ip-172-20-101-189.eu-west-3.compute.internal" cordoned
+WARNING: Ignoring DaemonSet-managed pods: weave-net-4pn4f, fluentd-es-rzhsw, node-exporter-2shtk; Deleting pods with local storage: alertmanager-main-1, prometheus-k8s-1; Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-101-189.eu-west-3.compute.internal
+pod "alertmanager-main-1" evicted
+pod "elasticsearch-logging-1" evicted
+pod "prometheus-k8s-1" evicted
+pod "kube-dns-756bfc7fdf-k8tw4" evicted
+node "ip-172-20-101-189.eu-west-3.compute.internal" drained
+I0726 14:05:30.961938    1379 instancegroups.go:273] Stopping instance "i-07cca6263241ae274", node "ip-172-20-101-189.eu-west-3.compute.internal", in group "tooling.vincent.gilles.kops.k8s.local".
+I0726 14:09:30.864352    1379 instancegroups.go:188] Validating the cluster.
+I0726 14:09:31.733761    1379 instancegroups.go:249] Cluster validated.
+I0726 14:09:31.733860    1379 instancegroups.go:157] Draining the node: "ip-172-20-49-15.eu-west-3.compute.internal".
+node "ip-172-20-49-15.eu-west-3.compute.internal" cordoned
+node "ip-172-20-49-15.eu-west-3.compute.internal" cordoned
+WARNING: Deleting pods with local storage: alertmanager-main-0, alertmanager-main-1, prometheus-k8s-1; Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-49-15.eu-west-3.compute.internal; Ignoring DaemonSet-managed pods: weave-net-45r4d, fluentd-es-g4vd8, node-exporter-wsmk2
+pod "alertmanager-main-1" evicted
+pod "alertmanager-main-0" evicted
+pod "prometheus-k8s-1" evicted
+pod "kubernetes-cockpit-s4ww9" evicted
+pod "kibana-logging-6569df478b-kv7lj" evicted
+node "ip-172-20-49-15.eu-west-3.compute.internal" drained
+I0726 14:14:45.926807    1379 instancegroups.go:273] Stopping instance "i-0db03e959519eb8d2", node "ip-172-20-49-15.eu-west-3.compute.internal", in group "tooling.vincent.gilles.kops.k8s.local".
+I0726 14:52:14.987731    1379 instancegroups.go:188] Validating the cluster.
+I0726 14:52:15.555161    1379 instancegroups.go:249] Cluster validated.
+I0726 14:52:15.555214    1379 instancegroups.go:157] Draining the node: "ip-172-20-86-201.eu-west-3.compute.internal".
+node "ip-172-20-86-201.eu-west-3.compute.internal" cordoned
+node "ip-172-20-86-201.eu-west-3.compute.internal" cordoned
+WARNING: Deleting pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet: kube-proxy-ip-172-20-86-201.eu-west-3.compute.internal; Ignoring DaemonSet-managed pods: weave-net-b45fm, fluentd-es-k7r8q, node-exporter-mfrjr; Deleting pods with local storage: grafana-9bbc47b59-pgnwp, prometheus-k8s-0
+pod "prometheus-operator-784bcf6d6-9ddvg" evicted
+pod "prometheus-operator-5d7b97bccf-q7fkz" evicted
+pod "grafana-9bbc47b59-pgnwp" evicted
+pod "prometheus-k8s-0" evicted
+pod "kubernetes-cockpit-hz2qj" evicted
+pod "kibana-logging-6569df478b-stj7h" evicted
+pod "elasticsearch-logging-0" evicted
+node "ip-172-20-86-201.eu-west-3.compute.internal" drained
+I0726 14:56:07.465560    1379 instancegroups.go:273] Stopping instance "i-0f9b2663f04343633", node "ip-172-20-86-201.eu-west-3.compute.internal", in group "tooling.vincent.gilles.kops.k8s.local".
+I0726 15:00:07.350805    1379 instancegroups.go:188] Validating the cluster.
+I0726 15:00:08.167406    1379 instancegroups.go:249] Cluster validated.
+I0726 15:00:08.167491    1379 rollingupdate.go:193] Rolling update completed for cluster "vincent.gilles.kops.k8s.local"!
+[vincent@6e6f799a9f9c ~]$
