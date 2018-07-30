@@ -75,7 +75,7 @@ metadata:
   name: master-eu-west-3a
 spec:
   image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
-  machineType: t2.xlarge
+  machineType: t2.large
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -95,7 +95,7 @@ metadata:
   name: master-eu-west-3b
 spec:
   image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
-  machineType: t2.xlarge
+  machineType: t2.large
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -115,7 +115,7 @@ metadata:
   name: master-eu-west-3c
 spec:
   image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
-  machineType: t2.xlarge
+  machineType: t2.large
   maxSize: 1
   minSize: 1
   nodeLabels:

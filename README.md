@@ -14,6 +14,11 @@ $ export CLUSTER_NAME=my.kops.cluster.k8s.local
 $ export DOCKER_REPO=username
 ```
 
+Vous pouvez modifier les valeurs du fichier prerequisites.sh et entrer la commande suivante : 
+```
+$ source prerequisites.sh
+```
+
 * Créer un lien symbolique vers votre répertoire .aws
 ```
 $ ln -s ~/.aws run/.aws
@@ -33,32 +38,42 @@ $ make run
 ```
 
 Vous êtes maintenant dans le container.
-Il faut maintenant créer le user kops et le state-store
 
-## Création du contexte d'utilisation
+## Démarrage du cluster
 
-* Création du user, groupe, droits, access_key et clé ssh
+* Pour démarrer un premier cluster :
 ```
-[guest@ac7056a87f3d ~]$ create-aws-kops-user.sh
+$ bin/create-and-launch-cluster.sh
 ```
+* Cela lancera un cluster avec les caractéristiques suivantes : 
+    * 3 masters en haute disponibilité sur les trois zones de disponibilité de la région de Paris
+    * 3 noeuds réservés à l'outillage (namespace "tooling") en haute disponibilité avec les applications suivantes : 
+        * Stack EFK
+        * Stack Prometheus + Grafana
+        * Cockpit
+    * 3 noeuds réservés à l'environnement "préprod" en haute disponibilité
+    * 3 noeuds réservés à l'environnement "prod" en haute disponibilité
+    * Dashboard Kubernetes déployé sur le namespace "kube-system"
 
-* Création du kops state-store
+* Pour accéder aux différents services, commencer par accéder au dashboard Kubernetes : 
 ```
-[guest@ac7056a87f3d ~]$ create-aws-s3-kops-state-store.sh
+$ kubectl cluster-info
+Kubernetes master is running at https://api-vincent-gilles-kops-k-h32v9n-330048093.eu-west-3.elb.amazonaws.com
 ```
+Accéder au dashboard : <url du cluster>/ui
 
-* Activer le user kops comme utilisateur courant sur AWS
-
+* Récupérer les credentials : 
 ```
-[guest@ac7056a87f3d ~]$ source bin/source-kops-env.sh
-[guest@ac7056a87f3d ~]$ aws iam get-user
-USER  arn:aws:iam::301517625970:user/clevandowski-kops  2018-07-04T21:47:19Z  / AIDAJQFNXUY23HFPTJ2G4 clevandowski-kops
-[guest@ac7056a87f3d ~]$ echo $KOPS_USER 
-clevandowski-kops
+$ kops get secret admin --type secret -oplaintext
+$ kops get secret kube --type secret -oplaintext
 ```
-Le user indiqué par la commande "aws iam get-user" doit être le user kops défini par KOPS_USER
 
 ## Nettoyage après shutdown du cluster
+
+* Suppression du cluster
+```
+$ bin/delete-cluster.sh
+```
 
 * Suppression du kops state-store
 ```
