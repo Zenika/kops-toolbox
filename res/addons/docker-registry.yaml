@@ -1,0 +1,132 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: docker-registry
+  annotations:
+    kops.k8s.io/instancegroup: tooling
+spec: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: docker-registry
+  namespace: docker-registry
+  labels:
+    k8s-app: docker-registry
+
+---
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: docker-registry
+  labels:
+    k8s-app: docker-registry
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - "services"
+  - "namespaces"
+  - "endpoints"
+  verbs:
+  - "get"
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: docker-registry
+  name: docker-registry
+  labels:
+    k8s-app: docker-registry
+subjects:
+- kind: ServiceAccount
+  name: docker-registry
+  namespace: docker-registry
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: docker-registry
+  apiGroup: ""
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: registry-pv-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "default"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+
+---
+
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: docker-registry
+  namespace: docker-registry
+  labels:
+    k8s-addon: docker-registry.addons.k8s.io
+    k8s-app: docker-registry
+    version: v1
+    kubernetes.io/cluster-service: "true"
+spec:
+  serviceName: docker-registry
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        k8s-app: docker-registry
+        version: v1
+        kubernetes.io/cluster-service: "true"
+    spec:
+      serviceAccountName: docker-registry
+      containers:
+      - image: registry:latest
+        name: docker-registry
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: docker-data
+          mountPath: /var/lib/registry
+      nodeSelector:
+         kops.k8s.io/instancegroup: tooling
+  volumeClaimTemplates:
+  - metadata:
+      name: docker-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "default"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 20Gi
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: registry
+  namespace: docker-registry
+spec:
+  type: LoadBalancer
+  selector:
+    k8s-app: docker-registry
+  ports:
+    - port: 5000
+      targetPort: 5000
+
+
