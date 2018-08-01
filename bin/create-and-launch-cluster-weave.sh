@@ -27,31 +27,31 @@ done
 
 echo "the cluster is up and running"
 
-while ! kubectl apply -f res/addons/namespace-tooling.yaml 2> res/null ;
+while ! kubectl apply -f ~/res/addons/namespace-tooling.yaml 2> res/null ;
     do
         echo "Waiting for tooling namespace creation"
         sleep 1
 done
 
-while ! kubectl apply -f res/addons/logging-elasticsearch.yaml 2> res/null ;
+while ! kubectl apply -f ~/res/addons/logging-elasticsearch.yaml 2> res/null ;
     do
         echo "Waiting for EFK stack deployment"
         sleep 1
 done
 
-while ! kubectl apply -f res/addons/prometheus-operator.yaml 2> res/null ;
+while ! kubectl apply -f ~/res/addons/prometheus-operator.yaml 2> res/null ;
     do
         echo "Waiting for Prometheus operator deployment"
         sleep 1
 done
 
-while ! kubectl apply -f res/addons/kubernetes-dashboard.yaml 2> res/null ;
+while ! kubectl apply -f ~/res/addons/kubernetes-dashboard.yaml 2> res/null ;
     do
         echo "Waiting for cluster dashboard deployment"
         sleep 1
 done
 
-while ! kubectl apply -f res/addons/kubernetes-cockpit.json 2> res/null ;
+while ! kubectl apply -f ~/res/addons/kubernetes-cockpit.json 2> res/null ;
     do
         echo "Waiting for Cockpit dashboard deployment"
         sleep 1
