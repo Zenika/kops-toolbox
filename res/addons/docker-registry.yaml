@@ -8,52 +8,6 @@ metadata:
 spec: {}
 status: {}
 
----
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: docker-registry
-  namespace: docker-registry
-  labels:
-    k8s-app: docker-registry
-
----
-
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1beta1
-metadata:
-  name: docker-registry
-  labels:
-    k8s-app: docker-registry
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - "services"
-  - "namespaces"
-  - "endpoints"
-  verbs:
-  - "get"
-
----
-
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
-metadata:
-  namespace: docker-registry
-  name: docker-registry
-  labels:
-    k8s-app: docker-registry
-subjects:
-- kind: ServiceAccount
-  name: docker-registry
-  namespace: docker-registry
-  apiGroup: ""
-roleRef:
-  kind: ClusterRole
-  name: docker-registry
-  apiGroup: ""
 
 ---
 
@@ -61,6 +15,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: registry-pv-claim
+  namespace: docker-registry
   annotations:
     volume.beta.kubernetes.io/storage-class: "default"
 spec:
@@ -73,7 +28,7 @@ spec:
 ---
 
 apiVersion: apps/v1beta1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: docker-registry
   namespace: docker-registry
@@ -83,8 +38,10 @@ metadata:
     version: v1
     kubernetes.io/cluster-service: "true"
 spec:
-  serviceName: docker-registry
-  replicas: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: docker-registry
   template:
     metadata:
       labels:
@@ -92,9 +49,8 @@ spec:
         version: v1
         kubernetes.io/cluster-service: "true"
     spec:
-      serviceAccountName: docker-registry
       containers:
-      - image: registry:latest
+      - image: registry:2.6.2
         name: docker-registry
         ports:
         - containerPort: 5000
@@ -103,16 +59,10 @@ spec:
           mountPath: /var/lib/registry
       nodeSelector:
          kops.k8s.io/instancegroup: tooling
-  volumeClaimTemplates:
-  - metadata:
-      name: docker-data
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "default"
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 20Gi
+      volumes: 
+        - name: docker-data
+          persistentVolumeClaim:
+            claimName: registry-pv-claim
 
 ---
 
@@ -122,7 +72,6 @@ metadata:
   name: registry
   namespace: docker-registry
 spec:
-  type: LoadBalancer
   selector:
     k8s-app: docker-registry
   ports:
