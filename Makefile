@@ -5,6 +5,7 @@ export GROUP_NAME := $(shell (groups | cut -f1 -d' '))
 
 build:
 	test -n "$(KOPS_USER)" || (echo "KOPS_USER is not defined. Aborting" && exit 1)
+	test -n "$(KOPS_GROUP)" || (echo "KOPS_GROUP is not defined. Aborting" && exit 1)
 	test -n "$(AWS_REGION)" || (echo "AWS_REGION is not defined (ex: eu-west-1). Aborting" && exit 1)
 	test -n "$(CLUSTER_NAME)" || (echo "CLUSTER_NAME is not defined (ex: my.kops.cluster.k8s.local). Aborting" && exit 1)
 
@@ -21,6 +22,7 @@ build:
 	--build-arg GROUP_ID=$$GROUP_ID \
 	--build-arg GROUP_NAME=$$GROUP_NAME \
 	--build-arg KOPS_USER=$$KOPS_USER \
+	--build-arg KOPS_GROUP=$$KOPS_GROUP \
 	--build-arg AWS_REGION=$$AWS_REGION \
 	--build-arg CLUSTER_NAME=$$CLUSTER_NAME \
 	.
@@ -30,7 +32,7 @@ run: build
 
 	docker container run --rm -ti \
 	--name kops-toolbox-$$$$ \
-	-v $$PWD/run/.aws:/home/$$USER_NAME/.aws \
+	-v $$PWD/run/.aws:/home/$$USER_NAME/.aws:ro \
 	-v $$PWD/run/.kube:/home/$$USER_NAME/.kube \
 	-v $$PWD/run/.ssh:/home/$$USER_NAME/.ssh:ro \
 	-v $$PWD/res:/home/$$USER_NAME/res \

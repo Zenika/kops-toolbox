@@ -36,6 +36,8 @@ RUN cat .bashrc_custom >> .bashrc \
 
 ARG KOPS_USER=my-kops-user
 ENV KOPS_USER $KOPS_USER
+ARG KOPS_GROUP=my-kops-group
+ENV KOPS_GROUP $KOPS_GROUP
 ARG AWS_REGION=eu-west-3
 ENV AWS_REGION $AWS_REGION
 ARG CLUSTER_NAME=my.kops.cluster.k8s.local

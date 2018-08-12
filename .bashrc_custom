@@ -2,5 +2,5 @@ source <(kubectl completion bash)
 source <(kops completion bash)
 complete -C ~/.local/bin/aws_completer aws
 
-. ~/bin/create-aws-kops-user.sh
 . ~/bin/source-kops-env.sh
+. ~/bin/create-aws-cluster-bucket-if-not-exists.sh
