@@ -81,6 +81,8 @@ spec:
   minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: master-eu-west-3a
+  cloudLabels:
+    owner: vincent-gilles-kops
   role: Master
   subnets:
   - eu-west-3a
@@ -101,6 +103,8 @@ spec:
   minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: master-eu-west-3b
+  cloudLabels:
+    owner: vincent-gilles-kops
   role: Master
   subnets:
   - eu-west-3b
@@ -121,6 +125,8 @@ spec:
   minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: master-eu-west-3c
+  cloudLabels:
+    owner: vincent-gilles-kops
   role: Master
   subnets:
   - eu-west-3c
@@ -141,6 +147,8 @@ spec:
   minSize: 3
   nodeLabels:
     kops.k8s.io/instancegroup: tooling
+  cloudLabels:
+    owner: vincent-gilles-kops
   role: Node
   subnets:
   - eu-west-3a
@@ -163,6 +171,8 @@ spec:
   minSize: 3
   nodeLabels:
     kops.k8s.io/instancegroup: prod
+  cloudLabels:
+    owner: vincent-gilles-kops
   role: Node
   subnets:
   - eu-west-3a
@@ -185,6 +195,8 @@ spec:
   minSize: 3
   nodeLabels:
     kops.k8s.io/instancegroup: preprod
+  cloudLabels:
+    owner: vincent-gilles-kops
   role: Node
   subnets:
   - eu-west-3a
