@@ -1,0 +1,1 @@
+echo -e "hello\nhow\nare\nyou?"

@@ -1,0 +1,5 @@
+
+
+. ~/bin/source-kops-env.sh
+. ~/bin/create-gcp-kops-user.sh
+echo "env variables all set"
