@@ -80,6 +80,8 @@ spec:
   minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: master-eu-west-3a
+  cloudLabels:
+    owner: $KOPS_USER
   role: Master
   subnets:
   - eu-west-3a
@@ -100,6 +102,8 @@ spec:
   minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: master-eu-west-3b
+  cloudLabels:
+    owner: $KOPS_USER
   role: Master
   subnets:
   - eu-west-3b
@@ -120,6 +124,8 @@ spec:
   minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: master-eu-west-3c
+  cloudLabels:
+    owner: $KOPS_USER
   role: Master
   subnets:
   - eu-west-3c
@@ -140,6 +146,8 @@ spec:
   minSize: 3
   nodeLabels:
     kops.k8s.io/instancegroup: tooling
+  cloudLabels:
+    owner: $KOPS_USER
   role: Node
   subnets:
   - eu-west-3a
@@ -162,6 +170,8 @@ spec:
   minSize: 3
   nodeLabels:
     kops.k8s.io/instancegroup: prod
+  cloudLabels:
+    owner: $KOPS_USER
   role: Node
   subnets:
   - eu-west-3a
@@ -184,6 +194,8 @@ spec:
   minSize: 3
   nodeLabels:
     kops.k8s.io/instancegroup: preprod
+  cloudLabels:
+    owner: $KOPS_USER
   role: Node
   subnets:
   - eu-west-3a

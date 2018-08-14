@@ -22,7 +22,7 @@ kops update cluster --name ${CLUSTER_NAME} --yes
 while ! kops validate cluster 2> res/null ;
     do
         echo "Waiting for cluster validation"
-        sleep 1
+        sleep 10
 done
 
 echo "the cluster is up and running"
