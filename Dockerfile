@@ -23,6 +23,9 @@ RUN if getent group ${GROUP_ID} >/dev/null; then echo "Group ${GROUP_ID} already
 # Add user if not present
 RUN if getent passwd ${USER_ID} >/dev/null; then echo "User ${USER_ID} already exists"; else echo "Creating user ${USER_ID}"; useradd -u ${USER_ID} -g ${GROUP_ID} ${USER_NAME}; fi
 
+RUN curl -O https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-rc.3-linux-amd64.tar.gz && tar -zxvf helm-v2.10.0-rc.3-linux-amd64.tar.gz && mv linux-amd64/helm /usr/local/bin/helm
+
+
 WORKDIR /home/${USER_NAME}
 ADD .bashrc_custom .bashrc_custom
 RUN chown -R ${USER_ID}:${GROUP_ID} .bashrc_custom

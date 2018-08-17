@@ -27,6 +27,24 @@ done
 
 echo "the cluster is up and running"
 
+while ! kubectl apply -f ~/res/helm-admin-role-binding.yaml 2> res/null ;
+    do
+        echo "Waiting on helm service account to create"
+        sleep 1
+done
+
+while ! helm init --service-account tiller 2> res/null ;
+    do
+        echo "Waiting on helm to install Tiller"
+        sleep 1
+done
+
+while helm install --name cert-manager --namespace kube-system stable/cert-manager 2> res/null ;
+    do
+        echo 'Waiting on Helm to install Kube-cert-manager on the cluster'
+        sleep 1
+done
+
 while ! kubectl apply -f ~/res/addons/namespace-tooling.yaml 2> res/null ;
     do
         echo "Waiting for tooling namespace creation"
