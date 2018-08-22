@@ -7,6 +7,15 @@ metadata:
   creationTimestamp: null
   name: $CLUSTER_NAME
 spec:
+  additionalPolicies:
+    node: |
+      [
+        {
+        "Effect": "Allow",
+        "Action": ["ecr:InitiateLayerUpload", "ecr:UploadLayerPart","ecr:CompleteLayerUpload","ecr:PutImage"],
+        "Resource": ["*"]
+        }
+      ]
   api:
     loadBalancer:
       type: Public
