@@ -143,8 +143,130 @@ $ kops get secret admin --type secret -oplaintext
 $ kops get secret kube --type secret -oplaintext
 ```
 
+## Installation et configuration de Jenkins X
+
+
+* Pour lancer l'assistant d'installation de Jenkins X : 
+```
+$ jx install
+```
+
+* Plusieurs questions seront posées par l'outil CLI : 
+    * Tout d'abord, sélectionner son cloud provider (ici AWS)
+    ```
+    ? Cloud Provider aws
+    ```
+    * Puis la configuration git à utiliser
+    ```
+    ? Please enter the name you wish to use with git:  Rude-Monkey
+    ? Please enter the email address you wish to use with git:  vgilles@et.esiea.fr
+    ```
+    * Ensuite, il sera demandé d'installer un ingress controller : accepter
+    ```
+    ? No existing ingress controller found in the kube-system namespace, shall we install one? Yes
+    ```
+    * Lorsqu'il est demandé d'associer un domaine au cluster, refuser (à moins d'en avoir un, bien évidemment)
+    ```
+    On AWS we recommend using a custom DNS name to access services in your kubernetes cluster to ensure you can use all of your availability zones
+    If you do not have a custom DNS name you can use yet you can register a new one here: https://console.aws.amazon.com/route53/home?#DomainRegistration:
+
+    ? Would you like to register a wildcard DNS ALIAS to point at this ELB address?  No
+    ```
+    * N'ayant pas de domaine, jx va proposer de résoudre l'IP du cluster et de l'utiliser en tant que domaine avec une wildcard. Accepter les deux prochaines requêtes
+    ```
+    The Ingress address acb1e4034a6df11e882ae0a0ad56e6ec-2c458d7f578f5fa4.elb.eu-west-3.amazonaws.com is not an IP address. We recommend we try resolve it to a public IP address and use that for the domain to access services externally.
+    ? Would you like wait and resolve this address to an IP address and use it for the domain? Yes
+
+    Waiting for acb1e4034a6df11e882ae0a0ad56e6ec-2c458d7f578f5fa4.elb.eu-west-3.amazonaws.com to be resolvable to an IP address...
+    acb1e4034a6df11e882ae0a0ad56e6ec-2c458d7f578f5fa4.elb.eu-west-3.amazonaws.com resolved to IP 52.47.128.128
+    You can now configure a wildcard DNS pointing to the new loadbalancer address 52.47.128.128
+    ```
+    ```
+    If you don't have a wildcard DNS setup then setup a new CNAME and point it at: 52.47.128.128.nip.io then use the DNS domain in the next input...
+    ? Domain 52.47.128.128.nip.io
+    nginx ingress controller installed and configured
+    ```
+    * Configuration des accès GitHub : génération d'une clé API et injection du token dans Jenkins X
+    ```
+    Lets set up a git username and API token to be able to perform CI/CD
+
+    ? GitHub user name: Rude-Monkey
+    To be able to create a repository on GitHub we need an API Token
+    Please click this URL https://github.com/settings/tokens/new?scopes=repo,read:user,read:org,user:email,write:repo_hook,delete_repo
+
+    Then COPY the token and enter in into the form below:
+
+    ? API Token: ****************************************
+    ```
+    * Configuration de Jenkins : génération de token et injection dans Jenkins X
+    ```
+    Jenkins X deployments ready in namespace jx
+
+
+        ********************************************************
+
+            NOTE: Your admin password is: hidenavy
+
+        ********************************************************
+
+        Getting Jenkins API Token
+    using url http://jenkins.jx.52.47.128.128.nip.io/me/configure
+    unable to automatically find API token with chromedp using URL http://jenkins.jx.52.47.128.128.nip.io/me/configure
+    Please go to http://jenkins.jx.52.47.128.128.nip.io/me/configure and click Show API Token to get your API Token
+    Then COPY the token and enter in into the form below:
+
+    ? API Token: ********************************
+    ```
+    * Jenkins X va ensuite créer deux repositories sur GitHub pour les environnements staging et production, ainsi que les différents webhooks nécessaires
+    ```
+    About to create repository environment-gamblerlizard-staging on server https://github.com with user Rude-Monkey
+
+    Creating repository Rude-Monkey/environment-gamblerlizard-staging
+    Creating git repository Rude-Monkey/environment-gamblerlizard-staging
+    Pushed git repository to https://github.com/Rude-Monkey/environment-gamblerlizard-staging
+
+    Created environment staging
+    Created Jenkins Project: http://jenkins.jx.52.47.128.128.nip.io/job/Rude-Monkey/job/environment-gamblerlizard-staging/
+
+    Note that your first pipeline may take a few minutes to start while the necessary images get downloaded!
+
+    Creating github webhook for Rude-Monkey/environment-gamblerlizard-staging for url http://jenkins.jx.52.47.128.128.nip.io/github-webhook/
+    Using git provider GitHub at https://github.com
+
+    About to create repository environment-gamblerlizard-production on server https://github.com with user Rude-Monkey
+
+    Creating repository Rude-Monkey/environment-gamblerlizard-production
+    Creating git repository Rude-Monkey/environment-gamblerlizard-production
+    Pushed git repository to https://github.com/Rude-Monkey/environment-gamblerlizard-production
+
+    Created environment production
+    Created Jenkins Project: http://jenkins.jx.52.47.128.128.nip.io/job/Rude-Monkey/job/environment-gamblerlizard-production/
+
+    Note that your first pipeline may take a few minutes to start while the necessary images get downloaded!
+
+    Creating github webhook for Rude-Monkey/environment-gamblerlizard-production for url http://jenkins.jx.52.47.128.128.nip.io/github-webhook/
+
+    Jenkins X installation completed successfully
+    ```
+
+
+
 ## Nettoyage après shutdown du cluster
 
+### Désinstallation de Jenkins X
+* Supprimer les repositories : 
+```
+$ jx delete repo
+```
+* Supprimer l'équilibrateur de charge : 
+Dans l'interface d'administration AWS, dans le service EC2, aller dans "équilibrateurs de charge" sous l'onglet "Équilibrage de charge".
+Celui à supprimer porte des balises de type : 
+```
+"kubernetes.io/service-name : kube-system/jxing-nginx-ingress-controller"
+"KubernetesCluster : vincent.gilles.kops.k8s.local"
+```
+
+### Suppression et nettoyage du cluster
 * Suppression du cluster
 ```
 $ bin/delete-cluster.sh
