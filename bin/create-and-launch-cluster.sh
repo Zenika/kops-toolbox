@@ -6,7 +6,7 @@ if [ "${CLUSTER_NAME}" = "" ] ; then echo "Aborting. Make sure you sourced the c
 
 if [ "${KOPS_STATE_STORE}" = "" ] ; then echo "Aborting. Make sure you sourced the correct environment variables: CLUSTER_NAME" ; exit 1 ; fi
 
-#while ! kops create secret --name ${CLUSTER_NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub 2> dev/null ;
+#while ! kops create secret --name ${CLUSTER_NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub 2> /dev/null ;
 #    do
 #        echo "Waiting for secret creation"
 #        sleep 1
@@ -26,19 +26,19 @@ done
 
 echo "the cluster is up and running"
 
-while ! kubectl apply -f ~/res/helm-admin-role-binding.yaml 2> dev/null ;
+while ! kubectl apply -f ~/res/helm-admin-role-binding.yaml 2> /dev/null ;
     do
         echo "Waiting on helm service account to create"
         sleep 1
 done
 
-while ! helm init --service-account tiller 2> dev/null ;
+while ! helm init --service-account tiller 2> /dev/null ;
     do
         echo "Waiting on helm to install Tiller"
         sleep 1
 done
 
-while helm install --name cert-manager --namespace kube-system stable/cert-manager 2> dev/null ;
+while helm install --name cert-manager --namespace kube-system stable/cert-manager 2> /dev/null ;
     do
         echo 'Waiting on Helm to install Kube-cert-manager on the cluster'
         sleep 1
