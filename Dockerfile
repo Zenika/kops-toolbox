@@ -39,6 +39,7 @@ ENV PATH ${PATH}:/home/${USER_NAME}/.local/bin:~${USER_NAME}/bin
 RUN pip install awscli --upgrade --user
 
 RUN cat .bashrc_custom >> .bashrc \
+    && jx completion bash >> .bashrc \
     && rm .bashrc_custom
 
 ARG KOPS_USER=my-kops-user
