@@ -1,5 +1,4 @@
 run/.aws
 run/.kube
 run/.ssh
-init-clevandowski-kops.sh
 ignore
