@@ -188,27 +188,4 @@ spec:
   - eu-west-3b
   - eu-west-3c
 
----
-
-apiVersion: kops/v1alpha2
-kind: InstanceGroup
-metadata:
-  creationTimestamp: null
-  labels:
-    kops.k8s.io/cluster: $CLUSTER_NAME
-  name: preprod
-spec:
-  image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
-  machineType: t2.large
-  maxSize: 3
-  minSize: 3
-  nodeLabels:
-    kops.k8s.io/instancegroup: preprod
-  cloudLabels:
-    owner: $KOPS_USER
-  role: Node
-  subnets:
-  - eu-west-3a
-  - eu-west-3b
-  - eu-west-3c
 COINCOIN
