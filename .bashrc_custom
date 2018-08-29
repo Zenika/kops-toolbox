@@ -1,5 +1,6 @@
 source <(kubectl completion bash)
 source <(kops completion bash)
+source <(jx completion bash)
 complete -C ~/.local/bin/aws_completer aws
 
 . ~/bin/source-kops-env.sh
