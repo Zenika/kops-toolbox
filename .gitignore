@@ -3,3 +3,4 @@ run/.kube
 run/.ssh
 ignore
 mysecret.yaml
+secrets.sh

@@ -13,6 +13,7 @@ build:
 	test -L "run/.aws" || (echo "Directory ~/.aws must be linked on run/.aws (ex: ln -s ~/.aws run/.aws). Aborting" && exit 1)
 	test -L "run/.kube" || (echo "Directory ~/.kube must be linked on run/.kube (ex: ln -s ~/.kube run/.kube). Aborting" && exit 1)
 	test -L "run/.ssh" || (echo "Directory ~/.ssh must be linked on run/.ssh (ex: ln -s ~/.ssh run/.ssh). Aborting" && exit 1)
+	test -d "run/.jx" || (echo "Directory run/.jx does not exist. Aborting" && exit 1)
 
 	echo "USER_NAME: $(USER_NAME)"
 	echo "GROUP_NAME: $(GROUP_NAME)"
@@ -25,6 +26,9 @@ build:
 	--build-arg KOPS_USER=$$KOPS_USER \
 	--build-arg KOPS_GROUP=$$KOPS_GROUP \
 	--build-arg AWS_REGION=$$AWS_REGION \
+	--build-arg GIT_API_TOKEN=$$GIT_API_TOKEN \
+	--build-arg GIT_USER_NAME=$$GIT_USER_NAME \
+	--build-arg GIT_USER_EMAIL=$$GIT_USER_EMAIL \
 	--build-arg CLUSTER_NAME=$$CLUSTER_NAME \
 	.
 
@@ -58,6 +62,7 @@ run: build
 	-v $$PWD/run/.aws:/home/$$USER_NAME/.aws:ro \
 	-v $$PWD/run/.kube:/home/$$USER_NAME/.kube \
 	-v $$PWD/run/.ssh:/home/$$USER_NAME/.ssh:ro \
+	-v $$PWD/run/.jx:/home/$$USER_NAME/.jx \
 	-v $$PWD/res:/home/$$USER_NAME/res \
 	-v $$PWD/bin:/home/$$USER_NAME/bin \
 	$$DOCKER_REPO/kops-toolbox:1.0
