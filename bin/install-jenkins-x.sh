@@ -8,7 +8,7 @@ jx install --batch-mode \
 --provider aws \
 --headless \
 --git-provider-url https://github.com \
---git-username Rude-Monkey \
+--git-username $GIT_USER_NAME \
 --git-api-token $GIT_API_TOKEN \
 --install-dependencies \
 --no-default-environments \
