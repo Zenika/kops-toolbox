@@ -4,3 +4,4 @@ run/.ssh
 ignore
 mysecret.yaml
 secrets.sh
+run/.jx
