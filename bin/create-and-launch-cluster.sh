@@ -26,6 +26,18 @@ done
 
 echo "the cluster is up and running"
 
+while ! kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml 2> /dev/null ;
+    do
+        echo "Preparing for Nginx Ingress controller installation"
+        sleep 1
+done
+
+while ! kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/service-nlb.yaml 2> /dev/null ;
+    do
+        echo "Installing Nginx Ingress controller"
+        sleep 1
+done
+
 while ! kubectl apply -f ~/res/helm-admin-role-binding.yaml 2> /dev/null ;
     do
         echo "Waiting on helm service account to create"
