@@ -4,6 +4,6 @@ metadata:
   creationTimestamp: null
   name: tooling
   annotations:
-    kops.k8s.io/instancegroup: tooling
+    kops.k8s.io/instancegroup: nodes
 spec: {}
 status: {}

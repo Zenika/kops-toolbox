@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   name: docker-registry
   annotations:
-    kops.k8s.io/instancegroup: tooling
+    kops.k8s.io/instancegroup: nodes
 spec: {}
 status: {}
 
@@ -58,7 +58,7 @@ spec:
         - name: docker-data
           mountPath: /var/lib/registry
       nodeSelector:
-         kops.k8s.io/instancegroup: tooling
+         kops.k8s.io/instancegroup: nodes
       volumes: 
         - name: docker-data
           persistentVolumeClaim:
