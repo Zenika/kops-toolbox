@@ -5,7 +5,7 @@ cat << COINCOIN
     {
       "Action": "UPSERT",
       "ResourceRecordSet": {
-        "Name": "*.kube.gilleslabs.xyz",
+        "Name": "*.$CLUSTER_DOMAIN",
         "Type": "CNAME",
         "TTL": 300,
         "ResourceRecords": [
