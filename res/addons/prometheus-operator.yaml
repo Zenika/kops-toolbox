@@ -12529,7 +12529,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: grafana.tooling.kube.gilleslabs.xyz
+  - host: grafana.kube.gilleslabs.xyz
     http:
       paths:
       - path: /
