@@ -27,3 +27,4 @@ aws route53 change-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID --chang
 
 
 rm -f ~/variables.sh
+rm -f res/addons/cname-record.json
