@@ -165,3 +165,28 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
+  type: ClusterIP
+status: 
+  loadBalancer: {}
+
+---
+# ------------------- Dashboard Ingress ------------------- #
+
+# apiVersion: extensions/v1beta1
+# kind: Ingress
+# metadata:
+#   name: kubernetes-dashboard
+#   namespace: kube-system
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   rules:
+#   - host: dashboard.kube-system.kube.gilleslabs.xyz
+#     http:
+#       paths:
+#       - path: /
+#         backend:
+#           serviceName: kubernetes-dashboard
+#           servicePort: 443
+
+# ---
