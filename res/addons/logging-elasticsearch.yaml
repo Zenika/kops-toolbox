@@ -280,10 +280,31 @@ metadata:
     kubernetes.io/cluster-service: "true"
     kubernetes.io/name: "Kibana"
 spec:
-  type: LoadBalancer
   ports:
   - port: 5601
-    protocol: TCP
     targetPort: ui
   selector:
     k8s-app: kibana-logging
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana-logging
+  namespace: tooling
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: kibana.kube.gilleslabs.xyz
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kibana-logging
+          servicePort: 5601
+
