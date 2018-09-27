@@ -30,6 +30,7 @@ build:
 	--build-arg GIT_USER_NAME=$$GIT_USER_NAME \
 	--build-arg GIT_USER_EMAIL=$$GIT_USER_EMAIL \
 	--build-arg CLUSTER_NAME=$$CLUSTER_NAME \
+	--build-arg CLUSTER_DOMAIN=$$CLUSTER_DOMAIN \
 	.
 
 build-gcp:
