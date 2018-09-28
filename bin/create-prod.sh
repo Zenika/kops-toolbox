@@ -69,7 +69,6 @@ done
 
 if [ "${CLUSTER_DOMAIN}" != "" ] ;
     then
-        echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
         ~/bin/generate-prometheus-operator-descriptor.sh
         export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator-with-ingress
     else
