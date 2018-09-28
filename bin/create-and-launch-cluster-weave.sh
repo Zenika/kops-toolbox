@@ -45,7 +45,7 @@ while ! kubectl apply -f ~/res/addons/namespace-tooling.yaml 2> /dev/null ;
         sleep 1
 done
 
-while ! kubectl apply -f ~/res/addons/logging-elasticsearch.yaml 2> /dev/null ;
+while ! kubectl apply -f ~/res/addons/logging-elasticsearch/logging-elasticsearch.yaml 2> /dev/null ;
     do
         echo "Waiting for EFK stack deployment"
         sleep 1

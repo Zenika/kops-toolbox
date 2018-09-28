@@ -55,13 +55,13 @@ done
 if [ "${CLUSTER_DOMAIN}" != "" ] ;
     then
         echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
-        ~/res/addons/logging-elasticsearch-template.sh > ~/res/addons/logging-elasticsearch-with-ingress.yaml
+        ~/res/addons/logging-elasticsearch/logging-elasticsearch-template.sh > ~/res/addons/logging-elasticsearch/logging-elasticsearch-with-ingress.yaml
         export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch-with-ingress
     else
         export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch
     fi
 
-while ! kubectl apply -f ~/res/addons/${ES_DESCRIPTOR_FILE_NAME}.yaml 2> /dev/null ;
+while ! kubectl apply -f ~/res/addons/logging-elasticsearch/${ES_DESCRIPTOR_FILE_NAME}.yaml 2> /dev/null ;
     do
         echo "Waiting for EFK stack deployment"
         sleep 1
