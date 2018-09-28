@@ -43,6 +43,16 @@ if [ "${CLUSTER_DOMAIN}" != "" ] ;
                 sleep 1
         done
         ~/bin/add-cname-record-to-hosted-zone.sh
+
+        echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
+        ~/res/addons/logging-elasticsearch/logging-elasticsearch-template.sh > ~/res/addons/logging-elasticsearch/logging-elasticsearch-with-ingress.yaml
+        export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch-with-ingress
+
+        ~/bin/generate-prometheus-operator-descriptor.sh
+        export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator-with-ingress
+    else
+        export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch
+        export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator
     fi
 
 
@@ -52,28 +62,11 @@ while ! kubectl apply -f ~/res/addons/namespace-tooling.yaml 2> /dev/null ;
         sleep 1
 done
 
-if [ "${CLUSTER_DOMAIN}" != "" ] ;
-    then
-        echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
-        ~/res/addons/logging-elasticsearch/logging-elasticsearch-template.sh > ~/res/addons/logging-elasticsearch/logging-elasticsearch-with-ingress.yaml
-        export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch-with-ingress
-    else
-        export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch
-    fi
-
 while ! kubectl apply -f ~/res/addons/logging-elasticsearch/${ES_DESCRIPTOR_FILE_NAME}.yaml 2> /dev/null ;
     do
         echo "Waiting for EFK stack deployment"
         sleep 1
 done
-
-if [ "${CLUSTER_DOMAIN}" != "" ] ;
-    then
-        ~/bin/generate-prometheus-operator-descriptor.sh
-        export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator-with-ingress
-    else
-        export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator
-    fi
 
 while ! kubectl apply -f ~/res/addons/prometheus/${PROMETHEUS_DESCRIPTOR_FILE_NAME}.yaml 2> /dev/null ;
     do
