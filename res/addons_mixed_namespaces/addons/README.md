@@ -36,7 +36,7 @@ kops get secrets admin --type secret -oplaintext
 ## Logging stack EFK
 
 ```
-kubectl apply -f res/addons/logging-elasticsearch.yaml
+kubectl apply -f res/addons/logging-elasticsearch/logging-elasticsearch.yaml
 ```
 
 Trouver les URL pour les services ES et Kibana: 
