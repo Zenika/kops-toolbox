@@ -17,6 +17,8 @@ kops create -f ~/res/prod/cluster-config.yaml
 
 kops create secret --name ${CLUSTER_NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
 
+kops upgrade cluster --name ${CLUSTER_NAME} --yes
+
 kops update cluster --name ${CLUSTER_NAME} --yes
 
 while ! kops validate cluster 2> /dev/null ;
@@ -50,13 +52,17 @@ while ! kubectl apply -f ~/res/addons/namespace-tooling.yaml 2> /dev/null ;
         sleep 1
 done
 
+echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
+~/res/addons/logging-elasticsearch-template.sh > ~/res/addons/logging-elasticsearch.yaml
 while ! kubectl apply -f ~/res/addons/logging-elasticsearch.yaml 2> /dev/null ;
     do
         echo "Waiting for EFK stack deployment"
         sleep 1
 done
 
-while ! kubectl apply -f ~/res/addons/prometheus-operator.yaml 2> /dev/null ;
+~/bin/generate-prometheus-operator-descriptor.sh
+
+while ! kubectl apply -f ~/res/addons/prometheus/prometheus-operator-descriptor.yaml 2> /dev/null ;
     do
         echo "Waiting for Prometheus operator deployment"
         sleep 1
