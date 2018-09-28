@@ -12515,27 +12515,7 @@ spec:
   selector:
     app: grafana
   sessionAffinity: None
-  type: ClusterIP
-status:
-  loadBalancer: {}
----
-
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: grafana
-  namespace: tooling
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-  - host: grafana.kube.gilleslabs.xyz
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: grafana
-          servicePort: 3000
+  type: LoadBalancer
 
 ---
 

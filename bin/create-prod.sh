@@ -52,17 +52,31 @@ while ! kubectl apply -f ~/res/addons/namespace-tooling.yaml 2> /dev/null ;
         sleep 1
 done
 
-echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
-~/res/addons/logging-elasticsearch-template.sh > ~/res/addons/logging-elasticsearch.yaml
-while ! kubectl apply -f ~/res/addons/logging-elasticsearch.yaml 2> /dev/null ;
+if [ "${CLUSTER_DOMAIN}" != "" ] ;
+    then
+        echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
+        ~/res/addons/logging-elasticsearch-template.sh > ~/res/addons/logging-elasticsearch-with-ingress.yaml
+        export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch-with-ingress
+    else
+        export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch
+    fi
+
+while ! kubectl apply -f ~/res/addons/${ES_DESCRIPTOR_FILE_NAME}.yaml 2> /dev/null ;
     do
         echo "Waiting for EFK stack deployment"
         sleep 1
 done
 
-~/bin/generate-prometheus-operator-descriptor.sh
+if [ "${CLUSTER_DOMAIN}" != "" ] ;
+    then
+        echo -e "Generating the logging-elasticsearch yaml descriptor with cluster domain $CLUSTER_DOMAIN"
+        ~/bin/generate-prometheus-operator-descriptor.sh
+        export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator-with-ingress
+    else
+        export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator
+    fi
 
-while ! kubectl apply -f ~/res/addons/prometheus/prometheus-operator-descriptor.yaml 2> /dev/null ;
+while ! kubectl apply -f ~/res/addons/prometheus/${PROMETHEUS_DESCRIPTOR_FILE_NAME}.yaml 2> /dev/null ;
     do
         echo "Waiting for Prometheus operator deployment"
         sleep 1
