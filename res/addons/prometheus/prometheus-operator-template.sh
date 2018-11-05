@@ -103,7 +103,7 @@ spec:
             cpu: 200m
             memory: 100Mi
           requests:
-            cpu: 100m
+            cpu: 10m
             memory: 50Mi
       securityContext:
         runAsNonRoot: true
@@ -5423,7 +5423,7 @@ spec:
             cpu: 200m
             memory: 100Mi
           requests:
-            cpu: 100m
+            cpu: 10m
             memory: 50Mi
       nodeSelector:
         kops.k8s.io/instancegroup: tooling
@@ -12471,7 +12471,7 @@ spec:
             cpu: 200m
             memory: 200Mi
           requests:
-            cpu: 100m
+            cpu: 10m
             memory: 100Mi
         volumeMounts:
         - mountPath: /var/lib/grafana
