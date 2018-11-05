@@ -126,7 +126,7 @@ spec:
           limits:
             memory: 200Mi
           requests:
-            cpu: 100m
+            cpu: 10m
             memory: 200Mi
         volumeMounts:
         - name: varlog
@@ -196,7 +196,7 @@ spec:
           limits:
             cpu: 1000m
           requests:
-            cpu: 100m
+            cpu: 25m
         ports:
         - containerPort: 9200
           name: db
@@ -252,9 +252,9 @@ spec:
         resources:
           # keep request = limit to keep this container in guaranteed class
           limits:
-            cpu: 1000m
+            cpu: 500m
           requests:
-            cpu: 100m
+            cpu: 10m
         env:
           - name: "ELASTICSEARCH_URL"
             value: "http://elasticsearch-logging:9200"
