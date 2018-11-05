@@ -13,8 +13,9 @@ RUN curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s http
     && curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
     && chmod +x ./kubectl \
     && mv ./kubectl /usr/local/bin/kubectl \
-    && curl -L https://github.com/jenkins-x/jx/releases/download/v1.3.177/jx-linux-amd64.tar.gz | tar xzv && mv jx /usr/local/bin \
-    && curl -L https://dl.google.com/go/go1.11.linux-amd64.tar.gz | tar xzv -C /usr/local 
+    && curl -L https://github.com/jenkins-x/jx/releases/download/v1.3.478/jx-linux-amd64.tar.gz | tar xzv && mv jx /usr/local/bin \
+    && curl -L https://dl.google.com/go/go1.11.linux-amd64.tar.gz | tar xzv -C /usr/local \
+    && yum -y install sysstat
 
 
 ARG USER_ID
