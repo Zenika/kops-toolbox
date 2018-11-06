@@ -12,4 +12,4 @@ export CLUSTER_DOMAIN=""
 #export GIT_USER_EMAIL=""
 #export GIT_API_TOKEN=""
 
-source ./secrets.sh
+source ./secrets.sh || source ./git.sh
