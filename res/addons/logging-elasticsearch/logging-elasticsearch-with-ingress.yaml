@@ -301,7 +301,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: kibana.kube.gilleslabs.xyz
+  - host: kibana.k8s.prod.aws.zenika.com
     http:
       paths:
       - path: /

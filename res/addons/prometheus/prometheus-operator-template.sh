@@ -12876,7 +12876,7 @@ spec:
             cpu: 102m
             memory: 180Mi
           requests:
-            cpu: 102m
+            cpu: 1m
             memory: 180Mi
         volumeMounts:
         - mountPath: /host/proc
@@ -12898,7 +12898,7 @@ spec:
             cpu: 20m
             memory: 40Mi
           requests:
-            cpu: 10m
+            cpu: 1m
             memory: 20Mi
       nodeSelector:
         beta.kubernetes.io/os: linux
@@ -13010,6 +13010,7 @@ spec:
   replicas: 2
   resources:
     requests:
+      cpu: 20m
       memory: 400Mi
   ruleSelector:
     matchLabels:
