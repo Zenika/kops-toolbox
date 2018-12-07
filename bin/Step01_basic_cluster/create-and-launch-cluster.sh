@@ -1,6 +1,6 @@
 #!/bin/bash
 
-~/res/cluster-template.sh > ~/res/cluster-config.yaml
+~/bin/step01_basic_cluster/cluster-template.sh > ~/generated_files/cluster-config-${STEP1}.yaml
 
 if [ "${CLUSTER_NAME}" = "" ] ; then echo "Aborting. Make sure you sourced the correct environment variables: CLUSTER_NAME" ; exit 1 ; fi
 
@@ -13,7 +13,7 @@ if [ "${KOPS_STATE_STORE}" = "" ] ; then echo "Aborting. Make sure you sourced t
 #done
 
 
-kops create -f ~/res/cluster-config.yaml
+kops create -f ~/generated_files/cluster-config-${STEP1}.yaml
 
 kops create secret --name ${CLUSTER_NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
 

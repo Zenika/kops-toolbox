@@ -1,6 +1,6 @@
 #!/bin/bash
 
-~/res/networking_tests/cluster-template-weave.sh > ~/res/networking_tests/cluster-config.yaml
+~/step02_basic_cluster_weave/cluster-template-weave.sh > ~/generated_files/cluster-config-${STEP2}.yaml
 
 if [ "${CLUSTER_NAME}" = "" ] ; then echo "Aborting. Make sure you sourced the correct environment variables: CLUSTER_NAME" ; exit 1 ; fi
 
