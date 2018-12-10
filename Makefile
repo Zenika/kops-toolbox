@@ -66,6 +66,7 @@ run: build
 	-v $$PWD/run/.jx:/home/$$USER_NAME/.jx \
 	-v $$PWD/res:/home/$$USER_NAME/res \
 	-v $$PWD/bin:/home/$$USER_NAME/bin \
+	-v $$PWD/generated_files:/home/$$USER_NAME/generated_files \
 	$$DOCKER_REPO/kops-toolbox:1.0
 
 run-gcp: build-gcp
