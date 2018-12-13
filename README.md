@@ -122,7 +122,7 @@ Vous êtes maintenant dans le container.
 
 * [Première étape : cluster basique](bin/Step01_basic_cluster/README.md)
 
-* [Deuxième étape : cluster basique avec Weave](bin/Step02_basic_cluster_with_weave/README.md)
+* [Deuxième étape : cluster basique avec Weave](bin/Step02_basic_cluster_weave/README.md)
 
 * [Troisième étape : cluster avec environnements séparés pour l'outillage et la production](bin/Step03_separated_tooling_environment/README.md)
 
