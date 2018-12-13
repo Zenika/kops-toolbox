@@ -1,6 +1,6 @@
 # kops-toolbox
 
-## Step 02 - Basic cluster with weave
+## Step 03 - Separated tooling environments
 
 Same cluster as in step 02 but this time we added different environments for prod and tooling. 
 
