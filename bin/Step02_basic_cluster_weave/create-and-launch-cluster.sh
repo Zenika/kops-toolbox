@@ -13,7 +13,7 @@ if [ "${KOPS_STATE_STORE}" = "" ] ; then echo "Aborting. Make sure you sourced t
 #done
 
 
-kops create -f ~/res/networking_tests/cluster-config.yaml
+kops create -f ~/generated_files/cluster-config-${STEP2}.yaml
 
 kops create secret --name ${CLUSTER_NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ~/res/cluster-template.sh > ~/res/cluster-config.yaml
+~/step03_separated_tooling_environment/cluster-template.sh > ~/generated_files/cluster-config-${STEP3}.yaml
 
 if [ "${CLUSTER_NAME}" = "" ] ; then echo "Aborting. Make sure you sourced the correct environment variables: CLUSTER_NAME" ; exit 1 ; fi
 
@@ -15,7 +16,7 @@ if [ "${KOPS_STATE_STORE}" = "" ] ; then echo "Aborting. Make sure you sourced t
 export ES_DESCRIPTOR_FILE_NAME=logging-elasticsearch
 export PROMETHEUS_DESCRIPTOR_FILE_NAME=prometheus-operator
 
-kops create -f ~/res/cluster-config.yaml
+~/generated_files/cluster-config-${STEP3}.yaml
 
 kops create secret --name ${CLUSTER_NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
 

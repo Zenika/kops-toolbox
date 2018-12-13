@@ -8,6 +8,6 @@ echo -e "About to start deleting cluster $CLUSTER_NAME\n"
 kops delete cluster $CLUSTER_NAME --yes
 
 echo -e "Deleting the generated config file for cluster $CLUSTER_NAME\n"
-rm -f ~/res/cluster-config.yaml
+rm -f ~/generated_files/cluster-config-${STEP3}.yaml
 
 echo -e "Deletion complete\n\n"

@@ -48,12 +48,12 @@ Accéder via l'IHM à la fonctionnalité d'ajout d'utilisateur :
 Services > IAM > Users, action "Add user"
 
 * Etape 1/4 - Set user details
-** Définir "user-name"
-** Access Type: Cocher "Programmatic Access" afin de créer une "Access Key" pour les API
+    * Définir "user-name"
+    * Access Type: Cocher "Programmatic Access" afin de créer une "Access Key" pour les API
 
 * Etape 2/4 - Set permissions
-** Sélectionner "Add user to group"
-** Cocher le nom du groupe préalablement créé avec ses policies
+    * Sélectionner "Add user to group"
+    * Cocher le nom du groupe préalablement créé avec ses policies
 
 * Etape 3/4 - Review
 Vérifier les infos avant création du user
