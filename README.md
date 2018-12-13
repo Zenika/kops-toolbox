@@ -118,26 +118,24 @@ Vous êtes maintenant dans le container.
 
 ## Démarrage du cluster
 
-* Pour démarrer un premier cluster :
-```
-$ bin/create-and-launch-cluster.sh
-```
-* Cela lancera un cluster avec les caractéristiques suivantes : 
-    * 3 masters en haute disponibilité sur les trois zones de disponibilité de la région de Paris
-    * 3 noeuds réservés à l'outillage (namespace "tooling") en haute disponibilité avec les applications suivantes : 
-        * Stack EFK
-        * Stack Prometheus + Grafana
-        * Cockpit
-    * 3 noeuds réservés à l'environnement "préprod" en haute disponibilité
-    * 3 noeuds réservés à l'environnement "prod" en haute disponibilité
-    * Dashboard Kubernetes déployé sur le namespace "kube-system"
+### Progression par étapes : 
+
+* [Première étape : cluster basique](bin/Step01_basic_cluster/README.md)
+
+* [Deuxième étape : cluster basique avec Weave](bin/Step02_basic_cluster_with_weave/README.md)
+
+* [Troisième étape : cluster avec environnements séparés pour l'outillage et la production](bin/Step03_separated_tooling_environment/README.md)
+
+* [Quatrième étape : ajout d'un ingress controller](bin/Step04_adding_an_ingress_controller/README.md) (EN COURS)
+
+* [Cinquième étape : changement d'ingress controller pour Traefik](bin/Step05_switching_ingress_controller_to_traefik/README.md) (EN COURS)
 
 * Pour accéder aux différents services, commencer par accéder au dashboard Kubernetes : 
 ```
 $ kubectl cluster-info
 Kubernetes master is running at https://api-vincent-gilles-kops-k-h32v9n-330048093.eu-west-3.elb.amazonaws.com
 ```
-Accéder au dashboard : \<url du cluster\>/ui
+Accéder au dashboard : `echo -e "$(kubectl cluster-info  | awk '$1 ~ /Kubernetes/ {print $6}')/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/"`
 
 * Récupérer les credentials : 
 ```
