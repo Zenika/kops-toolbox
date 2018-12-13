@@ -29,6 +29,8 @@ Pour chaque fichier dans le répertoire aws-policies, créer une policy ayant le
 * CustomEC2FullAccess2
 * CustomEC2FullAccess
 
+NB : bien vérifier les ARN dans les fichiers des politiques. Ces politiques ne donnent actuellement des autorisations et interdictions que si l'on possède un certain ID de compte. Il faudrait regarder comment adapter ça.
+
 ### Attachement des policies au groupe
 
 Accéder via l'IHM à la fonctionnalité d'ajout de groupe :
