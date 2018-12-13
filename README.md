@@ -118,6 +118,10 @@ Vous êtes maintenant dans le container.
 
 ## Démarrage du cluster
 
+###Progression par étapes : 
+
+* [Première étape : cluster basique](Step01_basic_cluster/README.md)
+
 * Pour démarrer un premier cluster :
 ```
 $ bin/create-and-launch-cluster.sh
